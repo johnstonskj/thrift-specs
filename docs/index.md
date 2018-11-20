@@ -29,6 +29,8 @@ The Transport layer provides a simple abstraction for reading/writing from/to th
 * [Transport API and Behavior](https://johnstonskj.github.io/thrift-specs/transport-common.md)
 * *End-Point* and *Wrapper* Transports
 
+## Transport Types Supported
+
 Type | Required | Comments
 -----|----------|---------
 Sockets  | Minimal required | TCP and Unix domain
@@ -45,6 +47,8 @@ The Protocol abstraction defines a mechanism to map in-memory data structures to
 
 * [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-common.md)
 
+## Protocol Types Supported
+
 Type | Required | Comments
 -----|----------|---------
 Binary    | Minimal required |
@@ -54,11 +58,19 @@ Compact | Other recommended | (required for [Parquet](https://parquet.apache.org
 
 ## Processors
 
-TBD
+A Processor encapsulates the ability to read data from input streams and write to output streams. The input and output streams are represented by Protocol objects. The Processor interface is extremely simple.
 
 ## Servers
 
-TBD
+A Server pulls together all of the various features described above:
+
+* Create a transport
+* Create input/output protocols for the transport
+* Create a processor based on the input/output protocols
+* Wait for incoming connections and hand them off to the processor
+
+
+## Server Types Supported
 
 Type | Required | Comments
 -----|----------|---------
