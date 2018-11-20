@@ -2,9 +2,9 @@
 
 ```
 interface TTransport {
-  open(...)
+  open()
   close()
-  is_open() : bool
+  is-open() : bool
   read() : value
   write(v : value)
   flush()
@@ -13,7 +13,7 @@ interface TTransport {
 
 ```
 interface TServerTransport {
-  open(...)
+  open()
   listen()
   accept()
   close()
