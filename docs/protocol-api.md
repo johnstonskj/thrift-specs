@@ -1,1 +1,47 @@
 # Protocol API and Behavior
+
+
+```
+interface TProtocol {
+  writeMessageBegin(name : string, type : call-type, seq : natural)
+  writeMessageEnd()
+  writeStructBegin(name : string)
+  writeStructEnd()
+  writeFieldBegin(name : string, type data-type, id : natural)
+  writeFieldEnd()
+  writeFieldStop()
+  writeMapBegin(ktype : data-type, vtype : data-type, size : positive)
+  writeMapEnd()
+  writeListBegin(etype : data-type, size : positive)
+  writeListEnd()
+  writeSetBegin(etype : data-type, size : positive)
+  writeSetEnd()
+  writeBool(v : bool)
+  writeByte(v : byte)
+  writeI16(v : i16)
+  writeI32(v : i32)
+  writeI64(v : i64)
+  writeDouble(v : double)
+  writeString(v : string)
+
+  (name : string, type : data-type, seq : natural) = readMessageBegin()
+  readMessageEnd()
+  name : string = readStructBegin()
+  readStructEnd()
+  (name : string, type : data-type, id : natural) = readFieldBegin()
+  readFieldEnd()
+  (k : data-type, v : data-type, size : positive) = readMapBegin()
+  readMapEnd()
+  (etype : data-type, size : positive) = readListBegin()
+  readListEnd()
+  (etype : : data-type, size : positive) = readSetBegin()
+  readSetEnd()
+  v : bool = readBool()
+  v : byte = readByte()
+  v : i16 = readI16()
+  v : i32 = readI32()
+  v : i64 = readI64()
+  v : double = readDouble()
+  v : string = readString()
+}
+```
