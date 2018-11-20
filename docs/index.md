@@ -2,7 +2,7 @@
 
 ## Architecture
 
-From [Concepts](https://thrift.apache.org/docs/concepts)
+TRhe following, commonly referenced diagram is taken from the Apache Thrift [Concepts](https://thrift.apache.org/docs/concepts) document.
 
 ```
   +-------------------------------------------+
@@ -28,15 +28,29 @@ The Transport layer provides a simple abstraction for reading/writing from/to th
 
 * [Transport API and Behavior](https://johnstonskj.github.io/thrift-specs/transport-common.md)
 * *End-Point* and *Wrapper* Transports
-* Commonly Supported Transports
+
+Type | Required | Comments
+-----|----------|---------
+Sockets  | Minimal required | TCP and Unix domain
+Buffered | Minimal required |
+Framed   | Minimal required |
+HTTP Client | Minimal recommended |
+HTTP Server | Other recommended |
+Pipes | Other recommended |
+Named Pipes | Other recommended | Where it makes sense
 
 ## Protocols
 
 The Protocol abstraction defines a mechanism to map in-memory data structures to a wire-format. In other words, a protocol specifies how datatypes use the underlying Transport to encode/decode themselves. Thus the protocol implementation governs the encoding scheme and is responsible for (de)serialization. Some examples of protocols in this sense include JSON, XML, plain text, compact binary etc.
 
 * [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-common.md)
-* *End-Point* and *Wrapper* Protocols
-* Commonly Supported Protocols
+
+Type | Required | Comments
+-----|----------|---------
+Binary    | Minimal required |
+Multiplex | Minimal required |
+JSON | Minimal recommended |
+Compact | Other recommended | (required for [Parquet](https://parquet.apache.org/))
 
 ## Processors
 
@@ -45,6 +59,12 @@ TBD
 ## Servers
 
 TBD
+
+Type | Required | Comments
+-----|----------|---------
+Simple    | Minimal required |
+Non-Blocking    | Other recommended |
+Threaded, Thread Pool | Other recommended | and/or
 
 ## Interface Definition Language
 
