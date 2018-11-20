@@ -24,24 +24,24 @@ interface TProtocol {
   writeDouble(v : double)
   writeString(v : string)
 
-  (name : string, type : data-type, seq : natural) = readMessageBegin()
+  readMessageBegin() : (name : string, type : data-type, seq : natural)
   readMessageEnd()
-  name : string = readStructBegin()
+  readStructBegin() : string
   readStructEnd()
-  (name : string, type : data-type, id : natural) = readFieldBegin()
+  readFieldBegin() : (name : string, type : data-type, id : natural)
   readFieldEnd()
-  (k : data-type, v : data-type, size : positive) = readMapBegin()
+  readMapBegin() : (k : data-type, v : data-type, size : positive)
   readMapEnd()
-  (etype : data-type, size : positive) = readListBegin()
+  readListBegin() : (etype : data-type, size : positive)
   readListEnd()
-  (etype : : data-type, size : positive) = readSetBegin()
+  readSetBegin() : (etype : : data-type, size : positive)
   readSetEnd()
-  v : bool = readBool()
-  v : byte = readByte()
-  v : i16 = readI16()
-  v : i32 = readI32()
-  v : i64 = readI64()
-  v : double = readDouble()
-  v : string = readString()
+  readBool() : bool
+  readByte() : byte
+  readI16() : i16
+  readI32() : i32
+  readI64() : i64
+  readDouble() : double
+  readString() : string
 }
 ```
