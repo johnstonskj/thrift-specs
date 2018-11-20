@@ -2,7 +2,7 @@
 
 ## Architecture
 
-TRhe following, commonly referenced diagram is taken from the Apache Thrift [Concepts](https://thrift.apache.org/docs/concepts) document.
+The following, commonly referenced diagram, is taken from the Apache Thrift [Concepts](https://thrift.apache.org/docs/concepts) document.
 
 ```
   +-------------------------------------------+
@@ -20,7 +20,7 @@ TRhe following, commonly referenced diagram is taken from the Apache Thrift [Con
   +-------------------------------------------+
 ```
 
-However, there is more to the overall picture, see [Architecture](https://johnstonskj.github.io/thrift-specs/architecture.md).
+However, there is more to the overall picture and we describe a more complete picture in the [Architecture](https://johnstonskj.github.io/thrift-specs/architecture.md) page.
 
 ## Transports
 
