@@ -20,13 +20,13 @@ The following, commonly referenced diagram, is taken from the Apache Thrift [Con
   +-------------------------------------------+
 ```
 
-However, there is more to the overall picture and we describe a more complete picture in the [Architecture](https://johnstonskj.github.io/thrift-specs/architecture.md) page.
+However, there is more to the overall picture and we describe a more complete picture in the [Architecture](https://johnstonskj.github.io/thrift-specs/architecture) page.
 
 ## Transports
 
 The Transport layer provides a simple abstraction for reading/writing from/to the network. This enables Thrift to decouple the underlying transport from the rest of the system (serialization/deserialization, for instance).
 
-* [Transport API and Behavior](https://johnstonskj.github.io/thrift-specs/transport-common.md)
+* [Transport API and Behavior](https://johnstonskj.github.io/thrift-specs/transport-api)
 * *End-Point* and *Wrapper* Transports
 
 ### Transport Types Supported
@@ -45,7 +45,7 @@ Named Pipes | Other recommended | Where it makes sense
 
 The Protocol abstraction defines a mechanism to map in-memory data structures to a wire-format. In other words, a protocol specifies how datatypes use the underlying Transport to encode/decode themselves. Thus the protocol implementation governs the encoding scheme and is responsible for (de)serialization. Some examples of protocols in this sense include JSON, XML, plain text, compact binary etc.
 
-* [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-common.md)
+* [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-api)
 
 ### Protocol Types Supported
 
