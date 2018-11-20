@@ -91,3 +91,5 @@ TBD
 2. [Apache-Hosted Wiki](https://wiki.apache.org/thrift)
 3. [Apache-Hosted Tutorial](http://wiki.apache.org/thrift/Tutorial)
 4. [The Missing Guide](https://diwakergupta.github.io/thrift-missing-guide)
+5. [Official Thrift Source](https://github.com/apache/thrift)
+5. [ThriftPy2 - Python Implementation](https://github.com/Thriftpy/thriftpy2)
