@@ -45,3 +45,41 @@ interface TProtocol {
   readString() : string
 }
 ```
+
+```
+enum call-type {
+  call = 1
+  reply = 2
+  exception = 3
+  one-way = 4
+}
+```
+
+```
+enum data-type {
+  stop = 0
+  bool = 2
+  byte = 3
+  double = 4
+  int16 = 6
+  int32 = 8
+  int64 = 10
+  string = 11
+  struct = 12
+  map = 13
+  set = 14
+  list = 15
+}
+```
+
+```
+const stop-field-value = 0
+```
+
+```
+enum more-data-types {
+  void = 1
+  utf-8 = 16
+  utf-16 = 17
+}
+```
