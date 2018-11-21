@@ -2,20 +2,19 @@
 
 ```
 interface TTransport {
-  open()
-  close()
-  is-open() : bool
-  read() : value
-  write(v : value)
-  flush()
+  void open(),
+  void close(),
+  value read(),
+  write(1 : value v),
+  void flush()
 }
 ```
 
 ```
 interface TServerTransport {
-  open()
-  listen()
-  accept()
-  close()
+  void open(),
+  void listen(),
+  void accept(),
+  void close()
 }
 ```
