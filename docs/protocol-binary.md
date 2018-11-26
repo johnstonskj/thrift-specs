@@ -1,6 +1,6 @@
-# Protocol {protocol-name}
+# Binary Protocol
 
-## BNF For {protocol-name}
+## BNF For Binary Protocol
 
 ```ebnf
 message        = [ version-number , unused , message-type ] (* strict *)
