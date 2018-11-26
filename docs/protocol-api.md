@@ -15,7 +15,7 @@ message-type   = T_CALL | T_REPLY | T_EXCEPTION | T_ONEWAY
                ;
 message-seqid  = I32
                ;
-struct         = struct-begin field* field-stop struct-end
+struct         = struct-begin { field } field-stop struct-end
                ;
 struct-begin   = struct-name
                ;
@@ -47,7 +47,7 @@ map-value-type = field-type
                ;
 map-size       = I32
                ;
-list           = list-begin field-data* list-end
+list           = list-begin { field-data } list-end
                ;
 list-begin     = list-elem-type list-size
                ;
@@ -55,7 +55,7 @@ list-elem-type = field-type
                ;
 list-size      = I32
                ;
-set            = set-begin field-data* set-end
+set            = set-begin { field-data } set-end
                ;
 set-begin      = set-elem-type set-size
                ;
