@@ -22,7 +22,7 @@ The following, commonly referenced diagram, is taken from the Apache Thrift [Con
 
 However, there is more to the overall picture and we describe a more complete picture in the [Architecture](https://johnstonskj.github.io/thrift-specs/architecture) page.
 
-The following sections will outline details on the specific layers, with specifications following [these guidelines](https://johnstonskj.github.io/thrift-specs/specification).
+The following sections will outline details on the specific layers, with specifications following these [specification guidelines](https://johnstonskj.github.io/thrift-specs/specification).
 ## Transports
 
 The Transport layer provides a simple abstraction for reading/writing from/to the network. This enables Thrift to decouple the underlying transport from the rest of the system (serialization/deserialization, for instance).
