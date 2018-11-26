@@ -102,7 +102,7 @@ enum AdditionlTypes {
 ## Stop Field
 
 ```thrift
-const T_STOP = 0
+const i8 T_STOP = 0
 ```
 
 ## Call Types
