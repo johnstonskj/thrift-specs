@@ -5,9 +5,9 @@
 [from Apache](https://github.com/apache/thrift/edit/master/doc/specs/thrift-protocol-spec.md)
 
 ```ebnf
-message        = message-begin struct message-end
+message        = message-begin , struct , message-end
                ;
-message-begin  = method-name message-type message-seqid
+message-begin  = method-name , message-type , message-seqid
                ;
 method-name    = STRING
                ;
@@ -15,7 +15,7 @@ message-type   = T_CALL | T_REPLY | T_EXCEPTION | T_ONEWAY
                ;
 message-seqid  = I32
                ;
-struct         = struct-begin { field } field-stop struct-end
+struct         = struct-begin , { field } , field-stop , struct-end
                ;
 struct-begin   = struct-name
                ;
@@ -23,9 +23,9 @@ struct-name    = STRING
                ;
 field-stop     = T_STOP
                ;
-field          = field-begin field-data field-end
+field          = field-begin , field-data , field-end
                ;
-field-begin    = field-name field-type field-id
+field-begin    = field-name , field-type , field-id
                ;
 field-name     = STRING
                ;
@@ -37,9 +37,9 @@ field-id       = I16
 field-data     = I8 | I16 | I32 | I64 | DOUBLE | STRING | BINARY
                | struct | map | list | set
                ;
-map            = map-begin { field-datum } map-end
+map            = map-begin , { field-datum } , map-end
                ;
-map-begin      = map-key-type map-value-type map-size
+map-begin      = map-key-type , map-value-type , map-size
                ;
 map-key-type   = field-type
                ;
@@ -47,17 +47,17 @@ map-value-type = field-type
                ;
 map-size       = I32
                ;
-list           = list-begin { field-data } list-end
+list           = list-begin , { field-data } , list-end
                ;
-list-begin     = list-elem-type list-size
+list-begin     = list-elem-type , list-size
                ;
 list-elem-type = field-type
                ;
 list-size      = I32
                ;
-set            = set-begin { field-data } set-end
+set            = set-begin , { field-data } , set-end
                ;
-set-begin      = set-elem-type set-size
+set-begin      = set-elem-type , set-size
                ;
 set-elem-type  = field-type
                ;
