@@ -119,7 +119,7 @@ enum CallType {
 ## Protocol Interface
 
 ```thrift
-interface TProtocol {
+/* interface */ service TProtocol {
   void writeMessageBegin(1: MessageHeader message),
   void writeMessageEnd(),
   void writeStructBegin(1: string name),
