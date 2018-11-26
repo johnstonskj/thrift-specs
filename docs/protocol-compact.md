@@ -46,12 +46,12 @@ list-type-header      = 0x9 ;
 set-type-header       = 0xA ;
 map-type-header       = 0xB ;
 struct-type-header    = 0xC ;
-byte                  = (1-byte value) ;
+byte                  = (* 1-byte value *) ;
 i16                   = zigzag-varint ;
 i32                   = zigzag-varint ;
 i64                   = zigzag-varint ;
 double                = (8-byte double) ;
-binary                = varint(size) (bytes)
+binary                = varint (* size *) byte* ;
 string                = binary (* utf-8 encoded *)
                       ;
 list                  = type-header varint list-body
