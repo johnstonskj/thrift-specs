@@ -1,24 +1,26 @@
-# Protocol {protocol-name}
+# Protocol Compact
 
-## BNF For {protocol-name}
+## BNF For Compact
 
 ```ebnf
 message               = version-and-type seq-id method-name struct-encoding
                       ;
 version-and-type      = version (* 6-bit identifier *) 
-                        type (* 2-bit identifier* )
+                        type    (* 2-bit identifier *)
                       ;
 seq-id                = varint
                       ;
-method-name           = varint (N-byte string)
+method-name           = string
                       ;
 struct-encoding       = field_list stop
                       ;
-field_list            = field field_list | field
+field_list            = field field_list 
+                      | field
                       ;
 field                 = type-and-id value
                       ;
-type-and-id           = field-id-delta type-header | 0 type-header zigzag-varint
+type-and-id           = field-id-delta type-header 
+                      | 0 type-header zigzag-varint
                       ;
 field-id-delta        = (4-bit offset from preceding field id, 1-15)
                       ;
