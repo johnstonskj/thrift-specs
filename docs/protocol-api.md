@@ -93,9 +93,9 @@ Character string may be UTF-7 or UTF-8.
 
 ```thrift
 enum AdditionlTypes {
-  void = 1
-  utf-8 = 16
-  utf-16 = 17
+  T_VOID = 1
+  T_UTF8 = 16
+  T_UTF16 = 17
 }
 ```
 
