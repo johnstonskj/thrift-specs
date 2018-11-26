@@ -64,6 +64,8 @@
 <set-size>       = I32
 ```
 
+They key point to notice is that ALL messages are just one wrapped <struct>. Depending upon the message type, the <struct> can be interpreted as the argument list to a function, the return value of a function, or an exception.
+
 ## Basic Types
 
 T_*ID*     | ID | Type     | Comments
