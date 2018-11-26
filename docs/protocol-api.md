@@ -69,7 +69,7 @@
 T_*ID*     | ID | Type     | Comments
 -----------|----|----------|-----------------------------------
 `T_BOOL`   | 2  | `BOOL`   | Boolean value, `true` or `false`.
-`T_BYTE`   | 3  || `BYTE`   | A single signed 8-bit byte.
+`T_BYTE`   | 3  | `BYTE`   | A single signed 8-bit byte.
 `T_I8`     | 3  | `I8`     | A synonym for `T_BYTE`.
 `T_I16`    | 6  | `I16`    | 16-bit signed integer.
 `T_I32`    | 8  | `I32`    | 32-bit signed integer.
