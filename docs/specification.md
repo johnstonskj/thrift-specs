@@ -4,7 +4,7 @@ The specifications in this repo are not intended to be formal, but a level of co
 
 ## IDL used
 
-The IDL used in the examples is based upon the Thrift IDL itself, however we add an `interface` keyword with an identical lexical form to the existing `service` but intended to describe abstractions.
+The IDL used in the examples is based upon the Thrift IDL itself, however we treat the existing `service` as an interface intended to describe abstractions.
 
 ## BNF notation used in this document
 
