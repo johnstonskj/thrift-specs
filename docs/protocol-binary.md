@@ -8,19 +8,16 @@
 
 ## Basic Type Encoding
 
-Type   | Format | Comments
--------|--------|---------
-bool   | TBD |
-byte   | TBD |
-double | TBD |
-int16  | TBD |
-int32  | TBD |
-int64  | TBD |
-string | TBD |
-list   | TBD |
-set    | TBD |
-map    | TBD |
-struct | TBD |
+Type       | Format | Comments
+-----------|--------|---------
+`T_BOOL`   | TBD |
+`T_BYTE`   | TBD |
+`T_I16`    | TBD |
+`T_I32`    | TBD |
+`T_I64`    | TBD |
+`T_DOUBLE` | TBD |
+`T_STRING` | TBD |
+`T_BINARY` | TBD |
 
 ## Message Encoding
 
