@@ -65,21 +65,6 @@ set-size       = I32 ;
 ```
 
 They key point to notice is that ALL messages are just one wrapped <struct>. Depending upon the message type, the <struct> can be interpreted as the argument list to a function, the return value of a function, or an exception.
-  
-As for unions,
-  
-```ebnf
-union = struct-begin field field-stop struct-end ;
-```
-
-## Structured Types
-
-T_*ID*     | ID | Comments
------------|----|-----------------------------------
-`T_STRUCT` | 12 |
-`T_MAP`    | 13 |
-`T_SET`    | 14 |
-`T_LIST`   | 15 |
 
 ## Basic Types
 
@@ -100,7 +85,22 @@ Notes:
 * Character string may be UTF-7 or UTF-8.
 * Unless otherwise specified in a protocol, enumeration values are encoded as `I32` values.
 
-### Additional Types
+## Structured Types
+
+T_*ID*     | ID | Comments
+-----------|----|-----------------------------------
+`T_STRUCT` | 12 |
+`T_MAP`    | 13 |
+`T_SET`    | 14 |
+`T_LIST`   | 15 |
+
+As for unions,
+  
+```ebnf
+union = struct-begin field field-stop struct-end ;
+```
+
+## Additional Types
 
 ```thrift
 enum AdditionlTypes {
