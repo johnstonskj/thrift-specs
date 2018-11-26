@@ -33,7 +33,7 @@ value                 = boolean-true | boolean-false | byte | i16 | i32 | i64 | 
                       | string | binary | list | set | map | struct
                       ;
 stop                  = 0x0 ;
-boolean-true          = 0x1 :
+boolean-true          = 0x1 ;
 boolean-false         = 0x2 ;
 byte-type-header      = 0x3 ;
 i16-type-header       = 0x4 ;
