@@ -108,3 +108,4 @@ enum AdditionlTypes {
 }
 ```
 
+[Protocol Template](https://johnstonskj.github.io/thrift-specs/protocol-template).
