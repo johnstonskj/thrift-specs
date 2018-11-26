@@ -16,7 +16,7 @@ Usage	           | Notation    | Comment
 definition	      | `=`         |
 concatenation    |	`,`         |
 termination	     | `;`         |
-alternation      |	`|`         |
+alternation      |	<code>&#124;</code>         |
 optional	        | `[ ... ]`   | zero or one
 repetition	      | `{ ... }`   | zero to many
 grouping	        | `( ... )`   |
