@@ -37,7 +37,7 @@ field-id       = I16
 field-data     = I8 | I16 | I32 | I64 | DOUBLE | STRING | BINARY
                | struct | map | list | set
                ;
-map            = map-begin field-datum* map-end
+map            = map-begin { field-datum } map-end
                ;
 map-begin      = map-key-type map-value-type map-size
                ;
