@@ -65,6 +65,13 @@
 ```
 
 They key point to notice is that ALL messages are just one wrapped <struct>. Depending upon the message type, the <struct> can be interpreted as the argument list to a function, the return value of a function, or an exception.
+  
+As for unions,
+  
+```ebnf
+<union>          = <struct-begin> <field> <field-stop> <struct-end>
+```
+
 
 ## Basic Types
 
@@ -83,7 +90,8 @@ T_*ID*     | ID | Type     | Comments
 Character string may be UTF-7 or UTF-8.
 
 ### Additional Types
-```
+
+```thrift
 enum AdditionlTypes {
   void = 1
   utf-8 = 16
@@ -93,13 +101,13 @@ enum AdditionlTypes {
 
 ## Stop Field
 
-```
+```thrift
 const T_STOP = 0
 ```
 
 ## Call Types
 
-```
+```thrift
 enum CallType {
   T_CALL = 1
   T_REPLY = 2
@@ -110,7 +118,7 @@ enum CallType {
 
 ## Protocol Interface
 
-```Thrift
+```thrift
 interface TProtocol {
   void writeMessageBegin(1: MessageHeader message),
   void writeMessageEnd(),
@@ -157,7 +165,7 @@ interface TProtocol {
 
 ### Interface Types
 
-```
+```thrift
 struct MessageHeader {
   1: string name,
   2: Calltype type,
