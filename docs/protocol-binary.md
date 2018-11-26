@@ -30,16 +30,16 @@ key-value      = value (* key *) , value (* value *) ;
 
 ## Basic Type Encoding
 
-Type       | Format  | Comments
------------|---------|---------
-`T_BOOL`   | I8      | true becomes 1, false becomes 0.
-`T_BYTE`   | I8      |
-`T_I16`    | I16/NW  | Network (big-endian) order.
-`T_I32`    | I32/NW  | Network (big-endian) order.
-`T_I64`    | I64/NW  | Network (big-endian) order.
-`T_DOUBLE` | I64/NW  | According to the IEEE 754 floating-point "double format" bit layout.
-`T_STRING` | I32+I8* | Encoded to UTF-8, and then treat as `T_BINARY`.
-`T_BINARY` | I32+I8* | Length, then bytes.
+Type       | Format   | Comments
+-----------|----------|---------
+`T_BOOL`   | I8       | true becomes 1, false becomes 0.
+`T_BYTE`   | I8       |
+`T_I16`    | I16/NW   | Network (big-endian) order.
+`T_I32`    | I32/NW   | Network (big-endian) order.
+`T_I64`    | I64/NW   | Network (big-endian) order.
+`T_DOUBLE` | I64/NW   | According to the IEEE 754 floating-point "double format" bit layout.
+`T_STRING` | I32,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
+`T_BINARY` | I32,{I8} | Length, then bytes.
 
 ## Message Encoding
 
