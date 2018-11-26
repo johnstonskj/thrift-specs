@@ -22,7 +22,7 @@ field                 = type-and-id value
 type-and-id           = field-id-delta type-header 
                       | 0 type-header zigzag-varint
                       ;
-field-id-delta        = (4-bit offset from preceding field id, 1-15)
+field-id-delta        = (*4-bit offset from preceding field id, 1-15 *)
                       ;
 type-header           = boolean-true | boolean-false | byte-type-header | i16-type-header
                       | i32-type-header | i64-type-header | double-type-header
@@ -50,7 +50,7 @@ byte                  = (* 1-byte value *) ;
 i16                   = zigzag-varint ;
 i32                   = zigzag-varint ;
 i64                   = zigzag-varint ;
-double                = (8-byte double) ;
+double                = (* 8-byte double *) ;
 binary                = varint (* size *) byte* ;
 string                = binary (* utf-8 encoded *)
                       ;
@@ -61,10 +61,11 @@ set                   = type-header varint list-body
 list-body             = value list-body 
                       | value
                       ;
-map                   = type-header (* key *) type-header (* value *) varint 
+map                   = type-header (* key *) type-header (* value *) varint (* size *)
                         key-value-pair-list
                       ;
-key-value-pair-list   = key-value-pair key-value-pair-list | key-value-pair
+key-value-pair-list   = key-value-pair key-value-pair-list 
+                      | key-value-pair
                       ;
 key-value-pair        = value (* key *) value (* value *) ;
 ```
