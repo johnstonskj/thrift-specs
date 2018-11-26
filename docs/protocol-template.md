@@ -17,10 +17,7 @@ int16  | TBD |
 int32  | TBD |
 int64  | TBD |
 string | TBD |
-list   | TBD |
-set    | TBD |
-map    | TBD |
-struct | TBD |
+binary | TBD |
 
 ## Message Encoding
 
