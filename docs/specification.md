@@ -11,20 +11,20 @@ The IDL used in the examples is based upon the Thrift IDL itself, however we tre
 All specifications will use ISO 14977 standard [Extended_Backus-Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form), summarized in the following table:
 
 
-Usage	           | Notation
------------------|------------
-definition	      | `=`
-concatenation    |	`,`
-termination	     | `;`
-alternation      |	`|`
-optional	        | `[ ... ]`
-repetition	      | `{ ... }`
-grouping	        | `( ... )`
-terminal string	 | `" ... "`
-terminal string	 | `' ... '`
-comment	         | `(* ... *)`
-special sequence	| `? ... ?`
-exception	       | `-`
+Usage	           | Notation    | Comment
+-----------------|-------------|--------
+definition	      | `=`         |
+concatenation    |	`,`         |
+termination	     | `;`         |
+alternation      |	`|`         |
+optional	        | `[ ... ]`   | zero or one
+repetition	      | `{ ... }`   | zero to many
+grouping	        | `( ... )`   |
+terminal string	 | `" ... "`   |
+terminal string	 | `' ... '`   | Unused in this site.
+comment	         | `(* ... *)` |
+special sequence	| `? ... ?`   | Used for extension specification.
+exception	       | `-`         |
 
 
 ## Protocol Specifications
