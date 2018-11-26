@@ -68,6 +68,8 @@ key-value-pair-list   = key-value-pair , key-value-pair-list
                       | key-value-pair
                       ;
 key-value-pair        = value (* key *) , value (* value *) ;
+zigzag-varint         = (* see below *) ;
+varint                = (* see below *) ;
 ```
 
 ## Basic Type Encoding
