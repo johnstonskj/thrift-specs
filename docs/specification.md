@@ -17,11 +17,12 @@ The following BNF notation is used:
 
 ## Protocol Specifications
 
-Each protocol will be specified according to a common format, if it is not considered a *wrapper* protocol it will have the following structure:
+Each protocol will be specified according to a common format, if it is not considered a *wrapper* protocol it will have the following structure (see [Protocol Template](https://johnstonskj.github.io/thrift-specs/protocol-template)):
 
 * BNF summarizing the structure
+* A description of basic type encodings
 * A description of the message encoding
-* A description of the struct encoding
+* A description of the struct and union encoding
   * A description of field encodings
   * A description of stop field handling
 * A description of the list and set encodings
