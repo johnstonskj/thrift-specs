@@ -72,6 +72,14 @@ As for unions,
 union = struct-begin field field-stop struct-end ;
 ```
 
+## Structured Types
+
+T_*ID*     | ID | Comments
+-----------|----|-----------------------------------
+`T_STRUCT` | 12 |
+`T_MAP`    | 13 |
+`T_SET`    | 14 |
+`T_LIST`   | 15 |
 
 ## Basic Types
 
