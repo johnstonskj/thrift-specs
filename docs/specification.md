@@ -8,12 +8,24 @@ The IDL used in the examples is based upon the Thrift IDL itself, however we tre
 
 ## BNF notation used in this document
 
-The following BNF notation is used:
+All specifications will use ISO 14977 standard [Extended_Backus-Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form), summarized in the following table:
 
-* a plus `+` appended to an item represents repetition; the item is repeated 1 or more times
-* a star `*` appended to an item represents optional repetition; the item is repeated 0 or more times
-* a pipe `|` between items represents choice, the first matching item is selected
-* parenthesis `(` and `)` are used for grouping multiple items
+
+Usage	           | Notation
+-----------------|------------
+definition	      | `=`
+concatenation    |	`,`
+termination	     | `;`
+alternation      |	`|`
+optional	        | `[ ... ]`
+repetition	      | `{ ... }`
+grouping	        | `( ... )`
+terminal string	 | `" ... "`
+terminal string	 | `' ... '`
+comment	         | `(* ... *)`
+special sequence	| `? ... ?`
+exception	       | `-`
+
 
 ## Protocol Specifications
 
