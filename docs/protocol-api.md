@@ -87,7 +87,10 @@ T_*ID*     | ID | Type     | Comments
 `T_STRING` | 11 | `STRING` | Character string.
 `T_BINARY` | 11 | `BINARY` | String of `T_BYTE`.
 
-Character string may be UTF-7 or UTF-8.
+Notes:
+
+* Character string may be UTF-7 or UTF-8.
+* Unless otherwise specified in a protocol, enumeration values are encoded as `I32` values.
 
 ### Additional Types
 
