@@ -69,7 +69,7 @@ They key point to notice is that ALL messages are just one wrapped <struct>. Dep
 As for unions,
   
 ```ebnf
-<union>          = <struct-begin> <field> <field-stop> <struct-end>
+union = struct-begin field field-stop struct-end ;
 ```
 
 
