@@ -5,7 +5,8 @@
 ```ebnf
 message               = version-and-type seq-id method-name struct-encoding
                       ;
-version-and-type      = version (* 6-bit identifier *) type (* 2-bit identifier* )
+version-and-type      = version (* 6-bit identifier *) 
+                        type (* 2-bit identifier* )
                       ;
 seq-id                = varint
                       ;
