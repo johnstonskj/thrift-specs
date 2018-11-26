@@ -1,6 +1,6 @@
-# Protocol Compact
+# Compact Protocol 
 
-## BNF For Compact
+## BNF For Compact Protocol
 
 ```ebnf
 message               = version-and-type seq-id method-name struct-encoding
