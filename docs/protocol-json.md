@@ -2,6 +2,8 @@
 
 From [C++ Header](https://github.com/apache/thrift/blob/master/lib/cpp/src/thrift/protocol/TJSONProtocol.h)
 
+This specification refers to the [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-api) which defines protocol-agnostic and default behavior.
+
 ## BNF For {protocol-name}
 
 ```ebnf
