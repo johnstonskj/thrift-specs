@@ -98,7 +98,7 @@ TBD
 TBD
 
 Field Type     | Base Type  | ID | Comments
----------------|------------|--------------
+---------------|------------|----|---------
 `F_BOOL_TRUE`  | `T_BOOL`   | 1  |
 `F_BOOL_FALSE` | `T_BOOL`   | 2  |
 `F_BYTE`       | `T_BYTE`   | 3  |
