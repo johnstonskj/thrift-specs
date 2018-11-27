@@ -1,7 +1,7 @@
 # Compact Protocol 
 
 
-This specification describes the *compact* wire encoding for Thrift, an optional component for Thrift and a required component for [Apache Parquet](https://parquet.apache.org/).
+This specification describes the *compact* wire encoding for Thrift, an optional component for Thrift and a required component for [Apache Parquet](https://parquet.apache.org/). The intent of the compact protocol is to be more space efficient than the existing [binary protocol](https://johnstonskj.github.io/thrift-specs/protocol-binary).
 
 This specification is based upon the [thrift-compact-protocol.md](https://raw.githubusercontent.com/apache/thrift/master/doc/specs/thrift-compact-protocol.md) in GitHub which in turn states that it is based mostly on the Java implementation in the Apache thrift library (version 0.9.1) and
 [THRIFT-110 A more compact format](https://issues.apache.org/jira/browse/THRIFT-110).
