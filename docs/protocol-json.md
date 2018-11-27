@@ -64,11 +64,22 @@ Thrift messages are represented as JSON arrays, with the protocol version #, the
 
 ## Struct and Union Encoding
 
-Thrift structs are represented as JSON objects, with the field ID as the key, and the field value represented as a JSON object with a single key-value pair. 
+Thrift structs are represented as JSON objects, with the field id as the key, and the field value represented as a JSON object with a single key-value pair. Note that JSON keys can only be strings, therefore field ids they are serialized as strings.
+
+```json
+{"1":{...},"2":{...},...}
+```
 
 ### Field Encoding
 
 The key is a short string identifier for that type, followed by the value. The valid type identifiers are: "tf" for bool, "i8" for byte, "i16" for 16-bit integer, "i32" for 32-bit integer, "i64" for 64-bit integer, "dbl" for double-precision floating point, "str" for string (including binary), "rec" for struct ("records"), "map" for map, "lst" for list, "set" for set.
+
+```json
+{
+  "1":{"str": "some message"},
+  "2":{"i32": 200}
+}
+```
 
 ### Stop Field Handling
 
@@ -78,9 +89,17 @@ No stop field is required as each struct is terminated by an enclosing brace, "}
 
 Thrift lists and sets are represented as JSON arrays, with the first element of the JSON array being the string identifier for the Thrift element type and the second element of the JSON array being the count of the Thrift elements. The Thrift elements then follow.
 
+```json
+["str",2,"hello","world"]
+```
+
 ## Map Encoding
 
 Thrift maps are represented as JSON arrays, with the first two elements of the JSON array being the string identifiers for the Thrift key type and value type, followed by the count of the Thrift pairs, followed by a JSON object containing the key-value pairs. Note that JSON keys can only be strings, which means that the key type of the Thrift map should be restricted to numeric or string types -- in the case of numerics, they are serialized as strings.
+
+```json
+["str","str",2,{"msg":"hello"},{"to":"world"}]
+```
 
 ## Examples
 
