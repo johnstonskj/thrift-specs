@@ -167,11 +167,6 @@ Compact protocol field header (1 to 3 bytes, long form) and field value:
 +--------+--------+...+--------+--------+...+--------+
 |0000tttt| field id            | field value         |
 +--------+--------+...+--------+--------+...+--------+
-
-Compact protocol stop field:
-+--------+
-|00000000|
-+--------+
 ```
 
 Where:
