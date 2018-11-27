@@ -7,8 +7,9 @@ This specification is based upon the [thrift-binary-protocol.md](https://github.
 ## BNF For Binary Protocol
 
 ```ebnf
-message        = [ version-number , unused , message-type ] (* strict *)
-               , name , sequence-id , struct
+message        = message-header , struct ;
+message-header = version-number , unused , message-type , name , sequence-id  (* strict *)
+               | name , message-type , sequence-id (* older *)
                ;
 version-number = I16 (* leading bit is 1, value is 1 *) ;
 unused         = I8 ;
@@ -67,7 +68,7 @@ Where:
 
 ## Message Encoding
 
-A `Message` can be encoded in two different ways, the first is a strict format with an encoded message version, and the second is an older form without version information.
+A `message-header` can be encoded in two different ways, the first is a strict format with an encoded message version, and the second is an older form without version information.
 
 ```
 Binary protocol Message, strict encoding, 12+ bytes:
