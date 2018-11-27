@@ -220,17 +220,16 @@ The following exception types are defined in the Java implementation (0.9.3):
 
 Code | Type  | Usage in Java Implementation
 -----|-------|--------
-0    | unknown              | used in case the type from the peer is unknown.
-1    | unknown method       | used in case the method requested by the client is unknown by the server.
-2    | invalid message type | no usage was found.
-3    | wrong method name    | no usage was found.
-4    | bad sequence id      | used internally by the client to indicate a wrong sequence id in the response.
-5    | missing result       | used internally by the client to indicate a response without any field (result nor exception).
-6    | internal error       | used when the server throws an exception that is not declared in the Thrift IDL file. 
-7    | protocol error       | used when something goes wrong during decoding. For example when a list is too long or a required
- field is missing. 
-8    | invalid transform    | no usage was found.
-9    | invalid protocol     | no usage was found.
-10   | unsupported client type | no usage was found.
+0    | unknown              | Used in case the type from the peer is unknown.
+1    | unknown method       | Used in case the method requested by the client is unknown by the server.
+2    | invalid message type | None found.
+3    | wrong method name    | None found.
+4    | bad sequence id      | Used internally by the client to indicate a wrong sequence id in the response.
+5    | missing result       | Used internally by the client to indicate a response without any field (result nor exception).
+6    | internal error       | Used when the server throws an exception that is not declared in the Thrift IDL file. 
+7    | protocol error       | Used when something goes wrong during decoding. For example when a list is too long or a required field is missing. 
+8    | invalid transform    | None found.
+9    | invalid protocol     | None found.
+10   | unsupported client type | None found.
 
 [Protocol Template](https://johnstonskj.github.io/thrift-specs/protocol-template).
