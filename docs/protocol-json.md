@@ -109,6 +109,12 @@ An example call message with no struct content.
 [1,"method",1,99]
 ```
 
+An example response encoding a UUID as a binary entity.
+
+```json
+[2,"method",2,99,{"1":{"i8":2},"2":{"str":"NjFFMEE0RkItQzNBMy00ODBGLTk3MjgtODc4MDg3M0Q1OTVFCg=="}}]
+```
+
 An example exception response.
 
 ```json
