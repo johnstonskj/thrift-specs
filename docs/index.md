@@ -35,8 +35,8 @@ The Transport layer provides a simple abstraction for reading/writing from/to th
 Type | Required | Comments
 -----|----------|---------
 Sockets  | Minimal required | TCP and Unix domain
-Buffered | Minimal required |
-Framed   | Minimal required |
+Buffered | Minimal required | *wrapper*
+Framed   | Minimal required | *wrapper*
 HTTP Client | Minimal recommended |
 HTTP Server | Other recommended |
 Pipes | Other recommended |
