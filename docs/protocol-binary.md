@@ -62,24 +62,90 @@ Binary protocol, binary data, 4+ bytes:
 
 Where:
 
-* `length` is the length of the byte array, a `T_I32` integer encoded in network (big endian) order (must be >= 0).
-* `bytes` are the bytes of the byte array.
+* `length` is the length of the byte array, a `T_I32` (must be >= 0).
+* `bytes` are the `T_BYTE` values of the array.
 
 ## Message Encoding
 
-TBD
+A `Message` can be encoded in two different ways, the first is a strict format with an encoded message version, and the second is an older form without version information.
+
+```
+Binary protocol Message, strict encoding, 12+ bytes:
++--------+--------+--------+--------+--------+--------+--------+--------+--------+...+--------+--------+--------+--------+--------+
+|1vvvvvvv|vvvvvvvv|unused  |00000mmm| name length                       | name                | seq id                            |
++--------+--------+--------+--------+--------+--------+--------+--------+--------+...+--------+--------+--------+--------+--------+
+```
+
+```
+Binary protocol Message, old encoding, 9+ bytes:
++--------+--------+--------+--------+--------+...+--------+--------+--------+--------+--------+--------+
+| name length                       | name                |00000mmm| seq id                            |
++--------+--------+--------+--------+--------+...+--------+--------+--------+--------+--------+--------+
+```
+
+Where:
+
+* `vvvvvvvvvvvvvvv` is the version, an unsigned 15 bit number fixed to `1` (in binary: `000 0000 0000 0001`).
+  The leading bit is `1`.
+* `unused` is an ignored `T_BYTE`.
+* `mmm` is the message type, an unsigned 3 bit integer. 
+  * The 5 leading bits must be `0` as some clients (checked for java in 0.9.1) take the whole byte.
+* `name length` is the byte length of the name field, a `T_I32` (must be >= 0).
+* `name` is the method name, a `T_STRING`.
+* `seq id` is the sequence id, a `T_I32`.
+
+Because `name length` **must be positive** (therefore the first bit is always `0`), the first bit allows the receiver to see
+whether the strict format or the old format is used. Therefore a server and client using the different variants of the
+binary protocol can transparently talk with each other. However, when strict mode is enforced, the old format is
+rejected.
 
 ## Struct and Union Encoding
 
-TBD
+A *Struct* is a sequence of zero or more fields, followed by a stop field. Each field starts with a field header and
+is followed by the encoded field value. 
+
+Because each field header contains the field-id (as defined by the Thrift IDL file), the fields can be encoded in any
+order. Thrift's type system is not extensible; you can only encode the primitive types and structs. Therefore is also
+possible to handle unknown fields while decoding; these are simply ignored. While decoding the field type can be used to
+determine how to decode the field value.
+
+Note that the field name is not encoded so field renames in the IDL do not affect forward and backward compatibility.
+
+The default Java implementation (Apache Thrift 0.9.1) has undefined behavior when it tries to decode a field that has
+another field-type then what is expected. Theoretically this could be detected at the cost of some additional checking.
+Other implementation may perform this check and then either ignore the field, or return a protocol exception.
+
+A *Union* is encoded exactly the same as a struct with the additional restriction that at most 1 field may be encoded.
+
+An *Exception* is encoded exactly the same as a struct.
 
 ### Field Encoding
 
-TBD
+Field headers and values are encoded in the following manner:
+
+```
+Binary protocol field header and field value:
++--------+--------+--------+--------+...+--------+
+|tttttttt| field id        | field value         |
++--------+--------+--------+--------+...+--------+
+```
+
+Where:
+
+* `tttttttt` the field-type, a `T_BYTE`.
+* `field id` the field-id, a `T_I16`.
+* `field-value` the encoded field value.
 
 ### Stop Field Handling
 
-TBD
+The stop field is simply encoded as the value `0` with the type `T_BYTE`.
+
+```
+Binary protocol stop field:
++--------+
+|00000000|
++--------+
+```
 
 ## List and Set Encoding
 
