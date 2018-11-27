@@ -97,6 +97,21 @@ TBD
 
 TBD
 
+Field Type     | Base Type  | ID | Comments
+---------------|------------|--------------
+`F_BOOL_TRUE`  | `T_BOOL`   | 1  |
+`F_BOOL_FALSE` | `T_BOOL`   | 2  |
+`F_BYTE`       | `T_BYTE`   | 3  |
+`F_I16`        | `T_I16`    | 4  |
+`F_I32`        | `T_I32`    | 5  |
+`F_I64`        | `T_I64`    | 6  |
+`F_DOUBLE`     | `T_DOUBLE` | 7  |
+`F_BINARY`     | `T_BINARY` | 8  | Used for binary and string fields.
+`F_LIST`       | `T_LIST`   | 9  |
+`F_SET`        | `T_SET`    | 10 |
+`F_MAP`        | `T_MAP`    | 11 |
+`F_STRUCT`     | `T_STRUCT` | 12 | 
+
 ### Stop Field Handling
 
 TBD
