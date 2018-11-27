@@ -2,6 +2,8 @@
 
 This specification describes the multiplex **protocol wrapper** for Thrift, an required component of the minimal language support for Thrift. The purpose of this wrapper is to allow a client to send messages to multiple services over the same transport in a seamless manner. To do this the wrapper extends the usual method name into a `service:method` format to identify the target service and method explicitly. On the server side a corresponding *multiplex processor* is specified that can decode and dispatch messages to the correct service implementation.
 
+Note that it is not possible to use a multiplex protocol and a non-multiplex protocol over the same transport, or generally with the same end-point.
+
 This specification refers to the [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-api) which defines protocol-agnostic and default behavior.
 
 ## BNF For Multiplex Protocol
