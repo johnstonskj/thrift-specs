@@ -13,25 +13,25 @@ message        = message-header , struct ;
 message-header = version-number , unused , message-type , name , sequence-id  (* strict *)
                | name , message-type , sequence-id (* older *)
                ;
-version-number = I16 (* leading bit is 1, value is 1 *) ;
-unused         = I8 ;
-message-type   = I8 (* 5-bit leading must be 0, 3-bit value *) ;
+version-number = i16 (* leading bit is 1, value is 1 *) ;
+unused         = i8 ;
+message-type   = i8 (* 5-bit leading must be 0, 3-bit value *) ;
 name           = string ;
-sequence-id    = I32 ;
+sequence-id    = i32 ;
 struct         = { field-header , value } , stop-field ;
 field-header   = field-type , field-id ;
-field-type     = I8 ;
-field-id       = I16 ;
-value          = bool | I8 | I16 | I32 | I64 | DOUBLE
+field-type     = i8 ;
+field-id       = i16 ;
+value          = bool | i8 | i16 | i32 | i64 | double
                | string | binary | struct | map | list-and-set ;
-binary         = length , { BYTE } ;
-length         = I32 ;
+binary         = length , { byte } ;
+length         = i32 ;
 string         = binary (* utf-8 encoded *) ;
 list-and-set   = element-type , size , { value } ;
-element-type   = I8 ;
-size           = I32 ;
+element-type   = i8 ;
+size           = i32 ;
 map            = key-type , element-type , size , { key-value } ;
-key-type       = I8 ;
+key-type       = i8 ;
 key-value      = value (* key *) , value (* value *) ;
 ```
 
@@ -39,14 +39,14 @@ key-value      = value (* key *) , value (* value *) ;
 
 Type       | Format   | Comments
 -----------|----------|---------
-`T_BOOL`   | I8       | true becomes 1, false becomes 0.
-`T_BYTE`   | I8       |
-`T_I16`    | I16/NW   | Network (big-endian) order.
-`T_I32`    | I32/NW   | Network (big-endian) order.
-`T_I64`    | I64/NW   | Network (big-endian) order.
-`T_DOUBLE` | I64/NW   | According to the IEEE 754 floating-point "double format" bit layout.
-`T_STRING` | I32,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
-`T_BINARY` | I32,{I8} | Length, then bytes.
+`T_BOOL`   | i8       | true becomes 1, false becomes 0.
+`T_BYTE`   | i8       |
+`T_I16`    | i16/NW   | Network (big-endian) order.
+`T_I32`    | i32/NW   | Network (big-endian) order.
+`T_I64`    | i64/NW   | Network (big-endian) order.
+`T_DOUBLE` | i64/NW   | According to the IEEE 754 floating-point "double format" bit layout.
+`T_STRING` | i32,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
+`T_BINARY` | i32,{I8} | Length, then bytes.
 
 Note that all multi-byte **Integer** types are encoded in network (big-endian) order. Implementations may provide the option to use the binary protocol with little endian order (the standard C++ library does), but how this is negotiated is not current specified.
 
@@ -137,7 +137,7 @@ Where:
 
 ### Stop Field Handling
 
-The stop field is simply encoded as the value `0` with the type `T_BYTE`.
+The stop field is simply encoded as the value `0` with the type `T_I8`.
 
 ```
 Binary protocol stop field:
