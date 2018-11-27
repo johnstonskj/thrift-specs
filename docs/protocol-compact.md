@@ -63,7 +63,7 @@ i16                   = zigzag-varint ;
 i32                   = zigzag-varint ;
 i64                   = zigzag-varint ;
 double                = ? 8-byte double ? ;
-binary                = varint (* size *) { byte } ;
+binary                = varint (* size *) , { byte } ;
 string                = binary (* utf-8 encoded *)
                       ;
 list                  = type-header , varint (* count *) , list-body
