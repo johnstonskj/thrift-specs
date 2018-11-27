@@ -9,7 +9,7 @@ message        = message-begin , struct , message-end
                ;
 message-begin  = method-name , message-type , message-seqid
                ;
-method-name    = STRING
+method-name    = string
                ;
 message-type   = T_CALL | T_REPLY | T_EXCEPTION | T_ONEWAY
                ;
