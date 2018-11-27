@@ -15,12 +15,12 @@ The following is edited from the original in [THRIFT-110 A more compact format](
 ```ebnf
 message               = message-header ,  struct-encoding
                       ;
-message-header        = version-and-type , seq-id , method-name
+message-header        = version-and-type , sequence-id , method-name
                       ;
 version-and-type      = version (* 6-bit identifier *) 
                       , type    (* 2-bit identifier *)
                       ;
-seq-id                = varint
+sequence-id           = varint
                       ;
 method-name           = string
                       ;
@@ -32,7 +32,7 @@ field_list            = field , field_list
 field                 = type-and-id , value
                       ;
 type-and-id           = field-id-delta , type-header 
-                      | "0" , type-header , zigzag-varint
+                      | "0" , type-header , zigzag-varint (* field-id *)
                       ;
 field-id-delta        = ? 4-bit offset from preceding field id, 1-15 ?
                       ;
@@ -66,16 +66,16 @@ double                = ? 8-byte double ? ;
 binary                = varint (* size *) { byte } ;
 string                = binary (* utf-8 encoded *)
                       ;
-list                  = type-header , varint , list-body
+list                  = type-header , varint (* count *) , list-body
                       ;
-set                   = type-header , varint , list-body
+set                   = type-header , varint (* count *) , list-body
                       ;
 list-body             = value , list-body 
                       | value
                       ;
 map                   = empty-map | non-empty-map ;
 empty-map             = ? size = 0 ? ;
-non-empty-map         = varint (* size *)
+non-empty-map         = varint (* count *)
                       , type-header (* key: 4 bits *) , type-header (* element: 4 bits *) 
                       , key-value-pair-list
 key-value-pair-list   = key-value-pair , key-value-pair-list 
@@ -133,9 +133,9 @@ Compact protocol message-header (4+ bytes):
 Where:
 
 * `pppppppp` is the protocol id, fixed to `1000 0010`, `0x82`.
-* `mmm` is the message type, an unsigned 3 bit integer.
-* `vvvvv` is the version, an unsigned 5 bit integer, fixed to `00001`.
-* `seq id` is the sequence id, a `T_I32` encoded as a varint.
+* `mmm` is the message `type`, an unsigned 3 bit integer.
+* `vvvvv` is the `version`, an unsigned 5 bit integer, fixed to `00001`.
+* `seq id` is the `sequence-id`, a `T_I32` encoded as a varint.
 * `name length` is the byte length of the name field, a `T_I32` encoded as a varint (must be >= 0).
 * `name` is the method name to invoke, a UTF-8 encoded string.
 
@@ -171,13 +171,13 @@ Compact protocol field header (1 to 3 bytes, long form) and field value:
 
 Where:
 
-* `dddd` is the field id delta, an unsigned 4 bits integer, strictly positive.
-* `tttt` is field-type id, an unsigned 4 bit integer.
-* `field id` the field id, a `T_I16` encoded as zigzag int.
+* `dddd` is the `field-id-delta`, an unsigned 4 bits integer, strictly positive.
+* `tttt` is `type-header` field type id, an unsigned 4 bit integer.
+* `field id` the `field-id`, a `T_I16` encoded as zigzag int.
 * `field-value` the encoded field value.
 
-The field id delta can be computed by `current-field-id - previous-field-id`, or just `current-field-id` if this is the
-first of the struct. The short form should be used when the field id delta is in the range `1 - 15` (inclusive).
+The `field-id` delta can be computed by `current-field-id - previous-field-id`, or just `current-field-id` if this is the
+first of the struct. The short form should be used when the `field-id-delta` is in the range `1 - 15` (inclusive).
 
 The following field-types can be encoded:
 
@@ -230,7 +230,7 @@ Compact protocol list header (2+ bytes, long form) and elements:
 
 Where:
 
-* `ssss` is the size, 4 bit unsigned int, values `0` - `14`
+* `ssss` is the size (`count`), 4 bit unsigned int, values `0` - `14`
 * `tttt` is the element-type, a 4 bit unsigned int
 * `size` is the size, a `T_I32` varint, positive values `15` or higher
 * `elements` are the encoded elements
@@ -259,7 +259,7 @@ Compact protocol map header (2+ bytes, non empty map) and key value pairs:
 
 Where:
 
-* `size` is the size, a `T_I32` varint, strictly positive values
+* `size` is the size (`count`), a `T_I32` varint, strictly positive values
 * `kkkk` is the key element-type, a 4 bit unsigned int
 * `vvvv` is the value element-type, a 4 bit unsigned int
 * `key value pairs` are the encoded keys and values
