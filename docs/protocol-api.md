@@ -100,7 +100,8 @@ Unless otherwise specified in a protocol, a union is treated in the same way as 
 union = struct-begin field field-stop struct-end ;
 ```
 
-## Additional Types
+<!--
+## Additional Types (From PyThrift2)
 
 ```thrift
 enum AdditionlTypes {
@@ -109,6 +110,7 @@ enum AdditionlTypes {
   T_UTF16 = 17
 }
 ```
+-->
 
 ## Stop Field
 
