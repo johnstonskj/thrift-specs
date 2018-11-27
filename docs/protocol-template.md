@@ -1,5 +1,9 @@
 # Protocol {protocol-name}
 
+This specification describes the *{protocol-name}* wire encoding for Thrift, an (optional|required) component of Thrift.
+
+This specification refers to the [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-api) which defines protocol-agnostic and default behavior.
+
 ## BNF For {protocol-name}
 
 ```ebnf
