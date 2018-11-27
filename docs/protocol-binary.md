@@ -26,7 +26,7 @@ length         = I32 ;
 string         = binary (* utf-8 encoded *) ;
 list-and-set   = element-type , size , { value } ;
 element-type   = I8 ;
-size           = I16 ;
+size           = I32 ;
 map            = key-type , element-type , size , { key-value } ;
 key-type       = I8 ;
 key-value      = value (* key *) , value (* value *) ;
@@ -132,7 +132,7 @@ Binary protocol field header and field value:
 
 Where:
 
-* `tttttttt` the field-type, a `T_BYTE`.
+* `tttttttt` the field-type, a `T_I8`.
 * `field id` the field-id, a `T_I16`.
 * `field-value` the encoded field value.
 
@@ -149,11 +149,46 @@ Binary protocol stop field:
 
 ## List and Set Encoding
 
-TBD
+List and sets are encoded the same: a header indicating the size and the `element-type` of the elements, followed by the
+encoded elements.
+
+```
+Binary protocol list (5+ bytes) and elements:
++--------+--------+--------+--------+--------+--------+...+--------+
+|tttttttt| size                              | elements            |
++--------+--------+--------+--------+--------+--------+...+--------+
+```
+
+Where:
+
+* `tttttttt` is the `element-type`, a `T_I8`
+* `size` is the size, a `T_I32`, positive values only
+* `elements` the element values
+
+The maximum list/set size is configurable. By default there is no limit (meaning the limit is the maximum `I32` value:
+2,147,483,647).
 
 ## Map Encoding
 
-TBD
+Maps are encoded with a header indicating the size, the element-type of the keys and the element-type of the elements,
+followed by the encoded elements.
+
+```
+Binary protocol map (6+ bytes) and key value pairs:
++--------+--------+--------+--------+--------+--------+--------+...+--------+
+|kkkkkkkk|vvvvvvvv| size                              | key value pairs     |
++--------+--------+--------+--------+--------+--------+--------+...+--------+
+```
+
+Where:
+
+* `kkkkkkkk` is the `key-type`, a `T_I8`.
+* `vvvvvvvv` is the value `element-type`, a `T_I8`.
+* `size` is the size, a `T_I32`, positive values only
+* `key value pairs` are the encoded keys and values
+
+The maximum map size is configurable. By default there is no limit (meaning the limit is the maximum `I32` value:
+2,147,483,647).
 
 ## Examples
 
