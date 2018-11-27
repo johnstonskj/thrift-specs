@@ -53,7 +53,7 @@ binary | string   | Encoded into Base64.
 
 Notes:
 
-* Thrift doubles are represented as JSON numbers. Some special values are represented as strings:
+* Thrift **doubles** are represented as JSON numbers. Some special values are represented as strings:
   * "NaN" for not-a-number values
   * "Infinity" for positive infinity
   * "-Infinity" for negative infinity
@@ -75,22 +75,22 @@ Thrift structs are represented as JSON objects. Fields are encoded as object pro
 
 ### Field Encoding
 
-Each field is encoded as a JSON object, that object has a single key and a single value. The key is a short string identifier  `type-id` (see table below).
+Each `field-value` is encoded as a JSON object and this object has a single key and a single value. The key is a short string identifier `type-id` (see table below), the JSON value is the `value` to be encoded.
 
-Type   | `type-id`   | Comments
--------|----------|---------
-bool   | "tf"    |
-byte   | "i8"    |
-double | "dbl"   | See below.
-int16  | "i16"   |
-int32  | "i32"   |
-int64  | "i64"   |
-string | "str"   | With appropriate escaping.
-binary | "str"   | Encoded into Base64.
-struct | "rec"   | (for "record").
-map    | "map"   |
-list   | "lst"   |
-set    | "set"   |
+Type   | `type-id`   
+-------|----------
+bool   | "tf"    
+byte   | "i8"    
+double | "dbl"   
+int16  | "i16"   
+int32  | "i32"   
+int64  | "i64"   
+string | "str"   
+binary | "str"   
+struct | "rec"   
+map    | "map"   
+list   | "lst"   
+set    | "set"   
 
 The following example shows the result of a struct encoding.
 
@@ -111,7 +111,7 @@ No stop field is required as each struct is terminated by an enclosing brace, "}
 
 ## List and Set Encoding
 
-Thrift lists and sets are represented as JSON arrays, with the first element of the JSON array being the string identifier for the Thrift element type and the second element of the JSON array being the count of the Thrift elements. The Thrift elements then follow.
+Thrift lists and sets are represented as JSON arrays, with the first element of the JSON array being the `type-id` for each element and the second element of the JSON array being the `count` of the Thrift elements. The Thrift elements then follow.
 
 ```json
 ["str",2,"hello","world"]
@@ -119,7 +119,7 @@ Thrift lists and sets are represented as JSON arrays, with the first element of 
 
 ## Map Encoding
 
-Thrift maps are represented as JSON arrays, with the first two elements of the JSON array being the string identifiers for the Thrift key type and value type, followed by the count of the Thrift pairs, followed by a JSON object containing the key-value pairs. Note that JSON keys can only be strings, which means that the key type of the Thrift map should be restricted to numeric or string types -- in the case of numerics, they are serialized as strings.
+Thrift maps are represented as JSON arrays, with the first two elements of the JSON array being the `type-id` for the key and the `type-id` for the value, then the `count` of the Thrift pairs, followed by a JSON object containing the key-value pairs. Note that JSON keys can only be strings, which means that the key type of the Thrift map should be restricted to numeric or string types -- in the case of numerics, they are serialized as strings.
 
 ```json
 ["str","str",2,{"msg":"hello"},{"to":"world"}]
