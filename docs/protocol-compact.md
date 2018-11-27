@@ -93,6 +93,26 @@ Type       | Format | Comments
 `T_STRING` | varint,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
 `T_BINARY` | varint,{I8} | Length, then bytes.
 
+Note that all multi-byte **Integer** types are encoded in network (big-endian) order before any zigzag/varint encoding. Implementations may provide the option to use the binary protocol with little endian order (the standard C++ library does), but how this is negotiated is not current specified.
+
+**Doubles** are converted to, and encoded as, `T_I64` (zigzag-varint) according to the IEEE 754 floating-point "double format" bit layout.
+
+**Strings** are first encoded to UTF-8, and then treated as binary.
+
+**Binary** is encoded as follows:
+
+```
+Binary protocol, binary data, 4+ bytes:
++--------+--------+--------+--------+--------+...+--------+
+| length                            | bytes               |
++--------+--------+--------+--------+--------+...+--------+
+```
+
+Where:
+
+* `length` is the length of the byte array, encoded as a `T_I32` varint (must be >= 0).
+* `bytes` are the `T_BYTE` values of the array.
+
 ## Message Encoding
 
 TBD
