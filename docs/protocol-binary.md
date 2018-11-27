@@ -2,7 +2,9 @@
 
 This specification describes the binary wire encoding for Thrift, a required component of the minimal language support for Thrift.
 
-This specification is based upon the [thrift-binary-protocol.md](https://github.com/apache/thrift/blob/master/doc/specs/thrift-binary-protocol.md) in GitHub which in turn states that it is based mostly on the *Java implementation in the Apache thrift library (version 0.9.1 and 0.9.3)*. 
+This specification is based upon the [thrift-binary-protocol.md](https://github.com/apache/thrift/blob/master/doc/specs/thrift-binary-protocol.md) in GitHub which in turn states that it is based mostly on the *Java implementation in the Apache thrift library (version 0.9.1 and 0.9.3)*.
+
+This specification refers to the [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-api) which defines protocol-agnostic and default behavior.
 
 ## BNF For Binary Protocol
 
@@ -115,10 +117,6 @@ Note that the field name is not encoded so field renames in the IDL do not affec
 The default Java implementation (Apache Thrift 0.9.1) has undefined behavior when it tries to decode a field that has
 another field-type then what is expected. Theoretically this could be detected at the cost of some additional checking.
 Other implementation may perform this check and then either ignore the field, or return a protocol exception.
-
-A *Union* is encoded exactly the same as a struct with the additional restriction that at most 1 field may be encoded.
-
-An *Exception* is encoded exactly the same as a struct.
 
 ### Field Encoding
 
