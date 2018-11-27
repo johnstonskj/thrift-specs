@@ -90,8 +90,8 @@ Type       | Format | Comments
 `T_I32`    | zigzag-varint |
 `T_I64`    | zigzag-varint |
 `T_DOUBLE` | zigzag-varint |
-`T_STRING` | zigzag-varint,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
-`T_BINARY` | zigzag-varint,{I8} | Length, then bytes.
+`T_STRING` | varint,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
+`T_BINARY` | varint,{I8} | Length, then bytes.
 
 ## Message Encoding
 
@@ -144,7 +144,7 @@ The *compact protocol* uses multiple encodings for integers: the _zigzag int_ (z
 
 Values of type `T_I32` and `T_I64` are first transformed to a *zigzag int*. A zigzag int folds positive and negative
 numbers into the positive number space. When we read 0, 1, 2, 3, 4 or 5 from the wire, this is translated to 0, -1, 1,
--2 or 2 respectively. Here are the (Scala) formulas to convert from int32/int64 to a zigzag int and back:
+-2 or 2 respectively. Here are the (Scala) formulas to convert from `T_I32`/`T_I64` to a zigzag int and back:
 
 ```scala
 def intToZigZag(n: Int): Int = (n << 1) ^ (n >> 31)
@@ -158,7 +158,7 @@ uses a single byte as in the binary protocol.
 
 ### Var Int Encoding
 
-The zigzag int is then encoded as a *var int*. Var ints take 1 to 5 bytes (int32) or 1 to 10 bytes (int64). The most
+The zigzag int is then encoded as a *var int*. Var ints take 1 to 5 bytes (`T_I32`) or 1 to 10 bytes (`T_I64`). The most
 significant bit of each byte indicates if more bytes follow. The concatenation of the least significant 7 bits from each
 byte form the number, where the first byte has the most significant bits (so they are in big endian or network order).
 
