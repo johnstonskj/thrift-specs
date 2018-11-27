@@ -132,7 +132,7 @@ Compact protocol message-header (4+ bytes):
 
 Where:
 
-* `pppppppp` is the protocol id, fixed to `1000 0010`, 0x82.
+* `pppppppp` is the protocol id, fixed to `1000 0010`, `0x82`.
 * `mmm` is the message type, an unsigned 3 bit integer.
 * `vvvvv` is the version, an unsigned 5 bit integer, fixed to `00001`.
 * `seq id` is the sequence id, a `T_I32` encoded as a varint.
@@ -177,7 +177,7 @@ Where:
 * `field-value` the encoded field value.
 
 The field id delta can be computed by `current-field-id - previous-field-id`, or just `current-field-id` if this is the
-first of the struct. The short form should be used when the field id delta is in the range 1 - 15 (inclusive).
+first of the struct. The short form should be used when the field id delta is in the range `1 - 15` (inclusive).
 
 The following field-types can be encoded:
 
@@ -201,7 +201,7 @@ length (0 bytes).
 
 ### Stop Field Handling
 
-The stop field is simply encoded as the value `0` with the type `T_BYTE`.
+The stop field is simply encoded as the value `0` with the type `T_I8`.
 
 ```
 Binary protocol stop field:
@@ -340,7 +340,6 @@ def write_varint(trans, n):
 def read_varint(trans):
     result = 0
     shift = 0
-
     while True:
         x = trans.read(1)
         byte = ord(x)
