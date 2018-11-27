@@ -94,11 +94,13 @@ T_*ID*     | ID | Comments
 `T_SET`    | 14 |
 `T_LIST`   | 15 |
 
-Unless otherwise specified in a protocol, a union is treated in the same way as a structure, except that it enforces the rule that one, and only one, field may be present at any time, as in:
+Unless otherwise specified in a protocol, a **union** is encoded in the same way as a structure, except that it enforces the rule that one, and only one, field may be present at any time, as in:
   
 ```ebnf
 union = struct-begin field field-stop struct-end ;
 ```
+
+Unless otherwise specified in a protocol, an **exception** is encoded in the same way as a structure.
 
 <!--
 ## Additional Types (From PyThrift2)
