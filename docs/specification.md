@@ -26,6 +26,7 @@ comment	         | `(* ... *)` |
 special sequence	| `? ... ?`   | Used for extension specification.
 exception	       | `-`         |
 
+Additionally the set of supported types in the Thrift IDL (`bool`, `byte`, `i8`, `i16`, `i32`, `i64`, `double`, `string`, and `binary`) are assumed to be pre-defined terminals.
 
 ## Protocol Specifications
 
