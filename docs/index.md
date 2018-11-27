@@ -1,4 +1,4 @@
-# Apache Thrift Specs
+# Apache Thrift Specifications
 
 ## Architecture
 
