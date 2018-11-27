@@ -53,7 +53,7 @@ The Protocol abstraction defines a mechanism to map in-memory data structures to
 Type | Required | Comments
 -----|----------|---------
 [Binary](https://johnstonskj.github.io/thrift-specs/protocol-binary)    | Minimal required |
-Multiplex | Minimal required |
+[Multiplex](https://johnstonskj.github.io/thrift-specs/protocol-multiplex) | Minimal required |
 [JSON](https://johnstonskj.github.io/thrift-specs/protocol-json) | Minimal recommended |
 [Compact](https://johnstonskj.github.io/thrift-specs/protocol-compact) | Other recommended | (required for [Parquet](https://parquet.apache.org/))
 
