@@ -64,15 +64,15 @@ Thrift messages are represented as JSON arrays, with the protocol version #, the
 
 ## Struct and Union Encoding
 
-Thrift structs are represented as JSON objects, with the field ID as the key, and the field value represented as a JSON object with a single key-value pair. The key is a short string identifier for that type, followed by the value. The valid type identifiers are: "tf" for bool, "i8" for byte, "i16" for 16-bit integer, "i32" for 32-bit integer, "i64" for 64-bit integer, "dbl" for double-precision loating point, "str" for string (including binary), "rec" for struct ("records"), "map" for map, "lst" for list, "set" for set.
+Thrift structs are represented as JSON objects, with the field ID as the key, and the field value represented as a JSON object with a single key-value pair. 
 
 ### Field Encoding
 
-TBD
+The key is a short string identifier for that type, followed by the value. The valid type identifiers are: "tf" for bool, "i8" for byte, "i16" for 16-bit integer, "i32" for 32-bit integer, "i64" for 64-bit integer, "dbl" for double-precision floating point, "str" for string (including binary), "rec" for struct ("records"), "map" for map, "lst" for list, "set" for set.
 
 ### Stop Field Handling
 
-TBD
+No stop field is required as each struct is terminated by an enclosing brace, "}".
 
 ## List and Set Encoding
 
