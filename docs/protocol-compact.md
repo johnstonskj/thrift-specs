@@ -301,6 +301,21 @@ def from_zig_zag(n):
     return (n >> 1) ^ -(n & 1)
 ```
 
+Finally, a Racket (Scheme) implementation:
+
+```racket
+(define (integer->zigzag n)
+  (cond
+    [(< (integer-length n) 32)
+     (bitwise-xor (arithmetic-shift n 1) (arithmetic-shift n -31))]
+    [(< (integer-length n) 64)
+     (bitwise-xor (arithmetic-shift n 1) (arithmetic-shift n -63))]
+    [else (raise (number-too-large (current-continuation-marks) 64 n))]))
+
+(define (zigzag->integer z)
+  (bitwise-xor (arithmetic-shift z -1) (- (bitwise-and z 1))))
+```
+
 ### Varint Encoding
 
 The zigzag int is then encoded as a *variable-length integer*. Varints take 1 to 5 bytes (`T_I32`) or 1 to 10 bytes (`T_I64`). The most significant bit of each byte indicates if more bytes follow. The concatenation of the least significant 7 bits from each byte form the number, where the first byte has the most significant bits (so they are in big endian or network order).
