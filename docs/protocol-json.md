@@ -84,10 +84,16 @@ Thrift maps are represented as JSON arrays, with the first two elements of the J
 
 ## Examples
 
-TBD
+An example call message with no struct content.
 
 ```json
 [1,"method",1,99]
+```
+
+An example exception response.
+
+```json
+[1,"method",3,{"1":{"str":"wrong method name: 'method'"},"2":{"i32":3}}]
 ```
 
 ## References
