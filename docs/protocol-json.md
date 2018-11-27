@@ -7,13 +7,12 @@ This specification refers to the [Protocol API and Behavior](https://johnstonskj
 ## BNF For {protocol-name}
 
 ```ebnf
-message          = "[" protocol-version message-name message-type sequence-id
-                       message-content "]" 
+message          = "[" , protocol-version , message-name , message-type , sequence-id
+                       , struct "]" 
                  ;
 protocol-version = number ;
 message-name     = string ;
 sequence-id      = number ;
-message-content  = struct ;
 struct           = "{" , [ field-list ] , "}" ;
 field-list       = field , ","
                  | field ;
@@ -87,7 +86,10 @@ Thrift maps are represented as JSON arrays, with the first two elements of the J
 
 TBD
 
+```json
+[1,"method",1,99]
+```
+
 ## References
 
 TBD
-
