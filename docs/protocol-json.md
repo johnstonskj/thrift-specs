@@ -1,10 +1,13 @@
-# Protocol {protocol-name}
+# JSON Protocol
 
-From [C++ Header](https://github.com/apache/thrift/blob/master/lib/cpp/src/thrift/protocol/TJSONProtocol.h)
+
+This specification describes the JSON wire encoding for Thrift, a recommended component of the minimal language support for Thrift.
+
+This specification is based upon the [C++ implementation header](https://github.com/apache/thrift/blob/master/lib/cpp/src/thrift/protocol/TJSONProtocol.h) in GitHub.
 
 This specification refers to the [Protocol API and Behavior](https://johnstonskj.github.io/thrift-specs/protocol-api) which defines protocol-agnostic and default behavior.
 
-## BNF For {protocol-name}
+## BNF For JSON Protocol
 
 ```ebnf
 message          = "[" , protocol-version , message-name , message-type , sequence-id
@@ -17,7 +20,7 @@ struct           = "{" , [ field-list ] , "}" ;
 field-list       = field , ","
                  | field ;
 field            = field-id , ":" , field-value ;
-field-id         = i16 ;
+field-id         = i16 (* as string *) ;
 field-value      = "{" , type-id , ":" , value , "}" ;
 type-id          = "tf" | "i8" | "i16" | "i32" | "i64" 
                  | "dbl" | "str" | "rec" | "map" | "lst" | "set" ;
@@ -60,11 +63,11 @@ More discussion of the double handling is probably warranted. The aim of the C++
 
 ## Message Encoding
 
-Thrift messages are represented as JSON arrays, with the protocol version #, the message name, the message type, and the sequence ID as the first 4 elements.
+Thrift messages are represented as JSON arrays, with the protocol version number (currently `1`), the message name, the message type, and the sequence ID as the first 4 elements.
 
 ## Struct and Union Encoding
 
-Thrift structs are represented as JSON objects, with the field id as the key, and the field value represented as a JSON object with a single key-value pair. Note that JSON keys can only be strings, therefore field ids they are serialized as strings.
+Thrift structs are represented as JSON objects. Fields are encoded as object properties, the key is the `field-id`, string encoded, and the field is encoded as described in the next section. Note that JSON keys can only be strings and therefore `field-id`s are serialized as strings.
 
 ```json
 {"1":{...},"2":{...},...}
@@ -72,12 +75,33 @@ Thrift structs are represented as JSON objects, with the field id as the key, an
 
 ### Field Encoding
 
-The key is a short string identifier for that type, followed by the value. The valid type identifiers are: "tf" for bool, "i8" for byte, "i16" for 16-bit integer, "i32" for 32-bit integer, "i64" for 64-bit integer, "dbl" for double-precision floating point, "str" for string (including binary), "rec" for struct ("records"), "map" for map, "lst" for list, "set" for set.
+Each field is encoded as a JSON object, that object has a single key and a single value. The key is a short string identifier  `type-id` (see table below).
+
+Type   | `type-id`   | Comments
+-------|----------|---------
+bool   | "tf"    |
+byte   | "i8"    |
+double | "dbl"   | See below.
+int16  | "i16"   |
+int32  | "i32"   |
+int64  | "i64"   |
+string | "str"   | With appropriate escaping.
+binary | "str"   | Encoded into Base64.
+struct | "rec"   | (for "record").
+map    | "map"   |
+list   | "lst"   |
+set    | "set"   |
+
+The following example shows the result of a struct encoding.
 
 ```json
 {
-  "1":{"str": "some message"},
-  "2":{"i32": 200}
+  "1": {
+    "str": "some message"
+  },
+  "2": {
+    "i32": 200
+  }
 }
 ```
 
