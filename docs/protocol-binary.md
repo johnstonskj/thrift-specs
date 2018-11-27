@@ -1,5 +1,9 @@
 # Binary Protocol
 
+This specification describes the binary wire encoding for Thrift, a required component of the minimal language support for Thrift.
+
+This specification is based upon the [thrift-binary-protocol.md](https://github.com/apache/thrift/blob/master/doc/specs/thrift-binary-protocol.md) in GitHub which in turn states that it is based mostly on the *Java implementation in the Apache thrift library (version 0.9.1 and 0.9.3)*. 
+
 ## BNF For Binary Protocol
 
 ```ebnf
@@ -40,6 +44,26 @@ Type       | Format   | Comments
 `T_DOUBLE` | I64/NW   | According to the IEEE 754 floating-point "double format" bit layout.
 `T_STRING` | I32,{I8} | Encoded to UTF-8, and then treat as `T_BINARY`.
 `T_BINARY` | I32,{I8} | Length, then bytes.
+
+Note that all multi-byte **Integer** types are encoded in network (big-endian) order. Implementations may provide the option to use the binary protocol with little endian order (the standard C++ library does), but how this is negotiated is not current specified.
+
+**Doubles** are converted to, and encoded as, `T_I64` according to the IEEE 754 floating-point "double format" bit layout.
+
+**Strings** are first encoded to UTF-8, and then treated as binary.
+
+**Binary** is encoded as follows:
+
+```
+Binary protocol, binary data, 4+ bytes:
++--------+--------+--------+--------+--------+...+--------+
+| length                            | bytes               |
++--------+--------+--------+--------+--------+...+--------+
+```
+
+Where:
+
+* `length` is the length of the byte array, a `T_I32` integer encoded in network (big endian) order (must be >= 0).
+* `bytes` are the bytes of the byte array.
 
 ## Message Encoding
 
