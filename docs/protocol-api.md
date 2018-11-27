@@ -94,7 +94,7 @@ T_*ID*     | ID | Comments
 `T_SET`    | 14 |
 `T_LIST`   | 15 |
 
-As for unions,
+Unless otherwise specified in a protocol, a union is treated in the same way as a structure, except that it enforces the rule that one, and only one, field may be present at any time, as in:
   
 ```ebnf
 union = struct-begin field field-stop struct-end ;
