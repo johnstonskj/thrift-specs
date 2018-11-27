@@ -280,7 +280,9 @@ The *compact protocol* uses multiple encodings for integers: the _zigzag int_ (z
 
 Values of type `T_I32` and `T_I64` are first transformed to a *zigzag int*. A zigzag int folds positive and negative
 numbers into the positive number space. When we read 0, 1, 2, 3, 4 or 5 from the wire, this is translated to 0, -1, 1,
--2 or 2 respectively. Here are the (Scala) formulas to convert from `T_I32`/`T_I64` to a zigzag int and back:
+-2 or 2 respectively. To encode a `T_I16` as zigzag int, it is first converted to an `T_I32` and then encoded as such. The type `T_I8` simply uses a single byte as in the binary protocol.
+
+Here are the Scala formulas to convert from `T_I32`/`T_I64` to a zigzag int and back:
 
 ```scala
 def intToZigZag(n: Int): Int = (n << 1) ^ (n >> 31)
@@ -289,8 +291,15 @@ def longToZigZag(n: Long): Long = (n << 1) ^ (n >> 63)
 def zigzagToLong(n: Long): Long = (n >>> 1) ^ - (n & 1)
 ```
 
-To encode a `T_I16` as zigzag int, it is first converted to an `T_I32` and then encoded as such. The type `T_I8` simply
-uses a single byte as in the binary protocol.
+Here is the Python implementation:
+
+```python
+def make_zig_zag(n, bits):
+    return (n << 1) ^ (n >> (bits - 1))
+
+def from_zig_zag(n):
+    return (n >> 1) ^ -(n & 1)
+```
 
 ### Varint Encoding
 
@@ -298,4 +307,30 @@ The zigzag int is then encoded as a *variable-length integer*. Varints take 1 to
 
 Varints are sometimes used directly inside the compact protocol to represent positive numbers.
 
+Here is the Python implementation:
 
+```python
+def write_varint(trans, n):
+    out = []
+    while True:
+        if n & ~0x7f == 0:
+            out.append(n)
+            break
+        else:
+            out.append((n & 0xff) | 0x80)
+            n = n >> 7
+    data = array.array('B', out).tostring()
+    trans.write(data)
+
+def read_varint(trans):
+    result = 0
+    shift = 0
+
+    while True:
+        x = trans.read(1)
+        byte = ord(x)
+        result |= (byte & 0x7f) << shift
+        if byte >> 7 == 0:
+            return result
+        shift += 7
+```
