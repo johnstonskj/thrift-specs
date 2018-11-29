@@ -144,13 +144,9 @@ ID | Implementation | T_*ID*
 
 -->
 
-## Stop Field
+## Message Types
 
-```thrift
-const i8 T_STOP = 0
-```
-
-## Call Types
+The following enumeration represents the common values for `message-type`.
 
 ```thrift
 enum CallType {
@@ -207,6 +203,8 @@ enum CallType {
   string readString()
 }
 ```
+
+> In general most implementations will provide a common read/write API (a single class with all methods above for example) and therefore expect to operate with a bin-directional transport able to both read and write bytes. However, in some cases (Scheme for example) I/O is separated into read and write capabilities and so the protocol may be represented as two APIs, one for read and one for write.
 
 **Example**
 
