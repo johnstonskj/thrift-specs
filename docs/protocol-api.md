@@ -76,35 +76,17 @@ A message header, `message-begin`, contains:
 * `message-type`, a message types, one of `T_CALL`, `T_REPLY`, `T_EXCEPTION` and `T_ONEWAY`.
 * `message-seqid`, a `T_I32`.
 
-The *sequence id* is a simple message id assigned by the client. The server will use the same sequence id in the
-message of the response. The client uses this number to detect out of order responses. Each client has an int32 field
-which is increased for each message. The sequence id simply wraps around when it overflows.
-
 The *method name* indicates the service method name to invoke. The server copies the name in the response message.
 
 > When the *[multiplexed protocol](https://johnstonskj.github.io/thrift-specs/protocol-multiplex)* is used, the name contains the service name, a colon `:` and the method name. The multiplexed protocol is not compatible with other protocols.
 
-The *message type* indicates what kind of message is sent. Clients send requests with TMessages of type `T_CALL` or
+The *message type* indicates what kind of message is sent. Clients send requests with messages of type `T_CALL` or
 `T_ONEWAY` (step 1 in the protocol exchange). Servers send responses with messages of type `T_EXCEPTION` or `T_REPLY` (step
 3). See [RPC Message Exchange](#RPC-Message-Exchange) for more details.
 
-Type `T_REPLY` is used when the service method completes normally. That is, it returns a value or it throws one of the
-exceptions defined in the Thrift IDL file.
-
-Type `T_EXCEPTION` is used for other exceptions. That is: when the service method throws an exception that is not declared
-in the Thrift IDL file, or some other part of the Thrift stack throws an exception. For example when the server could
-not encode or decode a message or struct.
-
-In the Java implementation (0.9.3) there is different behavior for the synchronous and asynchronous server. In the async
-server all exceptions are send as a `TApplicationException` (see 'Response struct' below). In the synchronous Java
-implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked
-exceptions lead to an immediate close of the connection.
-
-Type `T_ONEWAY` is only used starting from Apache Thrift 0.9.3. Earlier versions do _not_ send messages of type `T_ONEWAY`,
-even for service methods defined with the `oneway` modifier.
-
-When client sends a request with type `T_ONEWAY`, the server must _not_ send a response (steps 3 and 4 are skipped). Note
-that the Thrift IDL enforces a return type of `T_VOID` and does not allow exceptions for oneway services.
+The *sequence id* is a simple message id assigned by the client. The server will use the same sequence id in the
+message of the response. The client uses this number to detect out of order responses. Each client has an int32 field
+which is increased for each message. The sequence id simply wraps around when it overflows.
 
 ## Basic Types
 
@@ -318,14 +300,28 @@ Code | Type  | Usage in Java Implementation
 Both the binary protocol and the compact protocol assume a transport layer that exposes a bi-directional byte stream,
 for example a TCP socket. Both use the following exchange:
 
-1. Client sends a `Message` (type `Call` or `Oneway`). The TMessage contains some metadata and the name of the method
+1. Client sends a message (type `T_CALL` or `T_ONEWAY`). The message contains some metadata and the name of the method
    to invoke.
 2. Client sends method arguments (a struct defined by the generate code).
-3. Server sends a `Message` (type `Reply` or `Exception`) to start the response.
+3. Server sends a message (type `T_REPLY` or `T_EXCEPTION`) to start the response.
 4. Server sends a struct containing the method result or exception.
 
-The pattern is a simple half duplex protocol where the parties alternate in sending a `Message` followed by a struct.
-What these are is described below.
+The pattern is a simple half duplex protocol where the parties alternate in sending a message followed by a struct.
+
+Type `T_ONEWAY` is only used starting from Apache Thrift 0.9.3. Earlier versions do _not_ send messages of type `T_ONEWAY`,
+even for service methods defined with the `oneway` modifier. When client sends a request with type `T_ONEWAY`, the server must _not_ send a response (steps 3 and 4 are skipped). Note that the Thrift IDL enforces a return type of `T_VOID` and does not allow exceptions for oneway services.
+
+Type `T_REPLY` is used when the service method completes normally. That is, it returns a value or it throws one of the
+exceptions defined in the Thrift IDL file.
+
+Type `T_EXCEPTION` is used for other exceptions. That is: when the service method throws an exception that is not declared
+in the Thrift IDL file, or some other part of the Thrift stack throws an exception. For example when the server could
+not encode or decode a message or struct.
+
+In the Java implementation (0.9.3) there is different behavior for the synchronous and asynchronous server. In the async
+server all exceptions are send as a `TApplicationException` (see 'Response struct' below). In the synchronous Java
+implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked
+exceptions lead to an immediate close of the connection.
 
 Although the standard Apache Thrift Java clients do not support pipelining (sending multiple requests without waiting
 for an response), the standard Apache Thrift Java servers do support it.
