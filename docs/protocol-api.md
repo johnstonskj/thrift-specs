@@ -108,6 +108,7 @@ T_*ID*     | ID | IDL Type | Comments
 
 *Notes*:
 
+* These values are part of an enumeration `Type`.
 * Character string may be UTF-7 or UTF-8.
 * Unless otherwise specified in a protocol, enumeration values are encoded as `T_I32` values.
 
