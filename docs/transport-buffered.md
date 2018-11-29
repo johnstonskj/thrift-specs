@@ -1,6 +1,6 @@
 # Buffered and Framed Transports
 
-This specification describes the buffered and framed wrapper transports, both are required components of the minimal language support for Thrift.
+This specification describes the buffered and framed wrapper transports, both are required components of the minimal language support for Thrift. Any buffering performed by these wrappers is independent of any *intrinsic* buffering provided by any implementation of `TBufferedTransport`.
 
 This specification refers to the [Transport API and Behavior](https://johnstonskj.github.io/thrift-specs/transport-api) which defines transport-agnostic and default behavior.
 
