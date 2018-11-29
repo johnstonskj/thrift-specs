@@ -22,9 +22,9 @@ The behavior of a transport method other than `open` being called when the trans
 
 We assume that distinct constructor, or factory, procedures exist in a transport implementation to create instances of specific transports.
 
-### Supporting (Mixin) Interfaces
+### Additional Capability Interfaces
 
-The following set of methods (taken from the Java implementation, but implemented elsewhere as well) represent a mixin capability for transports that perform any internal buffering.
+The following set of methods (taken from the Java implementation, but implemented elsewhere as well) represent a *mix-in* capability for transports that perform any internal buffering.
 
 ```thrift
 (* interface *) service TBufferedTransport {
