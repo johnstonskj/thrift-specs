@@ -109,6 +109,8 @@ that the Thrift IDL enforces a return type of `void` and does not allow exceptio
 
 T_*ID*     | ID | IDL Type | Comments
 -----------|----|----------|-----------------------------------
+`T_STOP`   | 0  | *none*   | Used in the protocol for struct decoding.
+`T_VOID`   | 1  | *none*   | Used in IDL.
 `T_BOOL`   | 2  | `bool`   | Boolean value, `true` or `false`.
 `T_BYTE`   | 3  | `byte`   | A single signed 8-bit byte.
 `T_I8`     | 3  | `i8`     | A synonym for `T_BYTE`.
@@ -142,15 +144,15 @@ union = struct-begin field field-stop struct-end ;
 Unless otherwise specified in a protocol, an **exception** is encoded in the same way as a structure.
 
 <!--
-## Additional Types (From PyThrift2)
+## Additional Types
 
-```thrift
-enum AdditionlTypes {
-  T_VOID = 1
-  T_UTF8 = 16
-  T_UTF16 = 17
-}
-```
+ID | Implementation | T_*ID*
+---|----------------|-------
+9  | C++            | `T_U64`
+16 | PyThrift2, C++ | `T_UTF8`
+16 | Java           | `ENUM`
+17 | PyThrift2, C++ | `T_UTF16`
+
 -->
 
 ## Stop Field
