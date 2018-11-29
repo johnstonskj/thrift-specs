@@ -1,8 +1,10 @@
 # Protocol API and Behavior
 
+This specification describes the generic protocol layer interface and behavior, not any one specific implementation. The protocol layer provides an interface that supports the encoding and decoding of values over a *transport*. Different languages may provide idiomatic versions of the API described here, although the general order of operations and behavior should be preserved.
+
 ## Encoding-Agnostic Structure
 
-[from Apache](https://github.com/apache/thrift/edit/master/doc/specs/thrift-protocol-spec.md)
+The following EBNF description of the protocol, edited from [the Thrift GitHub docs](https://github.com/apache/thrift/edit/master/doc/specs/thrift-protocol-spec.md), describes the protocol in general terms without any encoding or other representational details. Other specifications should use this EBNF as a model when describing their specific encoding rules.
 
 ```ebnf
 message        = message-begin , struct , message-end
@@ -64,33 +66,32 @@ set-elem-type  = field-type
 set-size       = i32 ;
 ```
 
-They key point to notice is that ALL messages are just one wrapped <struct>. Depending upon the message type, the <struct> can be interpreted as the argument list to a function, the return value of a function, or an exception.
+They key point to notice is that ALL messages are just one wrapped <struct>. Depending upon the message type, the <struct> can be interpreted as the argument list to a function, the return value of a function, or an exception. This means that an encoding that has no explicit message termination can assume that the termination of the struct immediately after the message header terminates the message itself.
 
 ## Messages
 
-A *Message* contains:
+A message header, `message-begin`, contains:
 
-* _Name_, a string (can be empty).
-* _Message type_, a message types, one of `Call`, `Reply`, `Exception` and `Oneway`.
-* _Sequence id_, a signed int32 integer.
+* `method-name`, a `T_STRING` (can be empty).
+* `message-type`, a message types, one of `T_CALL`, `T_REPLY`, `T_EXCEPTION` and `T_ONEWAY`.
+* `message-seqid`, a `T_I32`.
 
 The *sequence id* is a simple message id assigned by the client. The server will use the same sequence id in the
 message of the response. The client uses this number to detect out of order responses. Each client has an int32 field
 which is increased for each message. The sequence id simply wraps around when it overflows.
 
-The *name* indicates the service method name to invoke. The server copies the name in the response message.
+The *method name* indicates the service method name to invoke. The server copies the name in the response message.
 
-When the *multiplexed protocol* is used, the name contains the service name, a colon `:` and the method name. The
-multiplexed protocol is not compatible with other protocols.
+> When the *[multiplexed protocol](https://johnstonskj.github.io/thrift-specs/protocol-multiplex)* is used, the name contains the service name, a colon `:` and the method name. The multiplexed protocol is not compatible with other protocols.
 
-The *message type* indicates what kind of message is sent. Clients send requests with TMessages of type `Call` or
-`Oneway` (step 1 in the protocol exchange). Servers send responses with messages of type `Exception` or `Reply` (step
-3).
+The *message type* indicates what kind of message is sent. Clients send requests with TMessages of type `T_CALL` or
+`T_ONEWAY` (step 1 in the protocol exchange). Servers send responses with messages of type `T_EXCEPTION` or `T_REPLY` (step
+3). See [RPC Message Exchange](#RPC-Message-Exchange) for more details.
 
-Type `Reply` is used when the service method completes normally. That is, it returns a value or it throws one of the
+Type `T_REPLY` is used when the service method completes normally. That is, it returns a value or it throws one of the
 exceptions defined in the Thrift IDL file.
 
-Type `Exception` is used for other exceptions. That is: when the service method throws an exception that is not declared
+Type `T_EXCEPTION` is used for other exceptions. That is: when the service method throws an exception that is not declared
 in the Thrift IDL file, or some other part of the Thrift stack throws an exception. For example when the server could
 not encode or decode a message or struct.
 
@@ -99,11 +100,11 @@ server all exceptions are send as a `TApplicationException` (see 'Response struc
 implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked
 exceptions lead to an immediate close of the connection.
 
-Type `Oneway` is only used starting from Apache Thrift 0.9.3. Earlier versions do _not_ send TMessages of type `Oneway`,
+Type `T_ONEWAY` is only used starting from Apache Thrift 0.9.3. Earlier versions do _not_ send messages of type `T_ONEWAY`,
 even for service methods defined with the `oneway` modifier.
 
-When client sends a request with type `Oneway`, the server must _not_ send a response (steps 3 and 4 are skipped). Note
-that the Thrift IDL enforces a return type of `void` and does not allow exceptions for oneway services.
+When client sends a request with type `T_ONEWAY`, the server must _not_ send a response (steps 3 and 4 are skipped). Note
+that the Thrift IDL enforces a return type of `T_VOID` and does not allow exceptions for oneway services.
 
 ## Basic Types
 
@@ -217,6 +218,43 @@ enum CallType {
   double readDouble(),
   string readString()
 }
+```
+
+**Example**
+
+```racket
+(define (write-message-over transport)
+  (define p (make-protocol-encoder transport))
+  ((encoder-message-begin p) (message-header "mthod" 7 9))
+
+  ((encoder-struct-begin p) "unused")
+
+  ((encoder-field-begin p) (field-header "name" type-string 1))
+  ((encoder-string p) "simon")
+  ((encoder-field-end p))
+
+  ((encoder-field-begin p) (field-header "age" type-byte 2))
+  ((encoder-byte p) 48)
+  ((encoder-field-end p))
+
+  ((encoder-field-begin p) (field-header "brilliant?" type-bool 3))
+  ((encoder-boolean p) #f)
+  ((encoder-field-end p))
+
+  ((encoder-field-stop p))
+
+  ((encoder-struct-end p))
+
+  ((encoder-map-begin p) (map-header type-string type-int32 0))
+  ((encoder-string p) "key")
+  ((encoder-string p) "value")
+  ((encoder-string p) "key2")
+  ((encoder-int32 p) 101)
+  ((encoder-int32 p) 202)
+  ((encoder-string p) "value?")
+  ((encoder-map-end p))
+
+  ((encoder-message-end p)))
 ```
 
 ### Interface Types
