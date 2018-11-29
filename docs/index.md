@@ -42,7 +42,7 @@ HTTP Server | Other recommended |
 Pipes | Other recommended |
 Named Pipes | Other recommended | Where it makes sense
 
-> We use the term *wrapper* in these documents to desctibe a capability that wraps another of the same type and enhances it's behavior in some manner.
+> We use the term *wrapper* in these documents to describe a capability that wraps another of the same type and enhances it's behavior in some manner.
 
 ## Protocols
 
