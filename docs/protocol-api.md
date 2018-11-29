@@ -207,7 +207,7 @@ enum CallType {
 ```racket
 (define (write-message-over transport)
   (define p (make-protocol-encoder transport))
-  ((encoder-message-begin p) (message-header "mthod" 7 9))
+  ((encoder-message-begin p) (message-header "set-brilliant" 7 9))
 
   ((encoder-struct-begin p) "unused")
 
@@ -226,15 +226,6 @@ enum CallType {
   ((encoder-field-stop p))
 
   ((encoder-struct-end p))
-
-  ((encoder-map-begin p) (map-header type-string type-int32 0))
-  ((encoder-string p) "key")
-  ((encoder-string p) "value")
-  ((encoder-string p) "key2")
-  ((encoder-int32 p) 101)
-  ((encoder-int32 p) 202)
-  ((encoder-string p) "value?")
-  ((encoder-map-end p))
 
   ((encoder-message-end p)))
 ```
