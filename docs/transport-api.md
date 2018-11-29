@@ -16,17 +16,27 @@ This specification describes the generic transport layer interface and behavior,
 }
 ```
 
-We assume constructor or factory methods to create instances of these.
+The behavior of a transport method other than `open` being called when the transport is not yet opened is implementation specific.
+
+> Note that the chosen name `peek` can be problematic in some implementations where this is the language/library name of an procedure to retrieve the next byte/bytes from a stream without moving the position within the stream. In such cases the Thrift `peek` may be renamed according to language-specific idioms.
+
+We assume that distinct constructor, or factory, procedures exist in a transport implementation to create instances of specific transports.
+
+### Supporting (Mixin) Interfaces
+
+The following set of methods (taken from the Java implementation, but implemented elsewhere as well) represent a mixin capability for transports that perform any internal buffering.
 
 ```thrift
 (* interface *) service TBufferedTransport {
   i32 maxSize(),
   binary getBuffer(),
-  i32 position(),
-  i32 remaining(),
+  i32 bufferPosition(),
+  i32 bufferRemaining(),
   void consume(1: i32 bytes)
 }
 ```
+
+The following set of methods represent a mixin capability for transports that support the ability to move the read/write position in the underlying byte stream.
 
 ```thrift
 (* interface *) service TSeekableTransport {
@@ -37,6 +47,8 @@ We assume constructor or factory methods to create instances of these.
 ```
 
 ## Server Transport API
+
+The following is the server-side API that implements a listener loop for, and dispatches, client requests.
 
 ```thrift
 (* interface *) service TServerTransport {
