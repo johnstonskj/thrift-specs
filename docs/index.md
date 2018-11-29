@@ -35,8 +35,8 @@ The Transport layer provides a simple abstraction for reading/writing from/to th
 Type | Required | Comments
 -----|----------|---------
 Sockets  | Minimal required | TCP and Unix domain
-Buffered | Minimal required | *wrapper*
-Framed   | Minimal required | *wrapper*
+[Buffered](https://johnstonskj.github.io/thrift-specs/transport-buffered) | Minimal required | *wrapper*
+[Framed](https://johnstonskj.github.io/thrift-specs/transport-buffered)   | Minimal required | *wrapper*
 HTTP Client | Minimal recommended |
 HTTP Server | Other recommended |
 Pipes | Other recommended |
