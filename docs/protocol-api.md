@@ -90,6 +90,8 @@ which is increased for each message. The sequence id simply wraps around when it
 
 ## Basic Types
 
+The following basic/atomic types, supporting all the options of the IDL, are handled by the protocol API.
+
 T_*ID*     | ID | IDL Type | Comments
 -----------|----|----------|-----------------------------------
 `T_STOP`   | 0  | *none*   | Used in the protocol for struct decoding.
@@ -104,12 +106,14 @@ T_*ID*     | ID | IDL Type | Comments
 `T_STRING` | 11 | `string` | Character string.
 `T_BINARY` | 11 | `binary` | String of `T_BYTE`.
 
-Notes:
+*Notes*:
 
 * Character string may be UTF-7 or UTF-8.
 * Unless otherwise specified in a protocol, enumeration values are encoded as `T_I32` values.
 
 ## Structured Types
+
+The following structure types are handled by the protocol API.
 
 T_*ID*     | ID | Comments
 -----------|----|-----------------------------------
@@ -118,13 +122,15 @@ T_*ID*     | ID | Comments
 `T_SET`    | 14 |
 `T_LIST`   | 15 |
 
-Unless otherwise specified in a protocol, a **union** is encoded in the same way as a structure, except that it enforces the rule that one, and only one, field may be present at any time, as in:
+*Notes*:
+
+* Unless otherwise specified in a protocol, a **union** is encoded in the same way as a structure, except that it enforces the rule that one, and only one, field may be present at any time, as in:
   
 ```ebnf
 union = struct-begin field field-stop struct-end ;
 ```
 
-Unless otherwise specified in a protocol, an **exception** is encoded in the same way as a structure.
+* Unless otherwise specified in a protocol, an **exception** is encoded in the same way as a structure.
 
 <!--
 ## Additional Types
@@ -288,8 +294,7 @@ Code | Type  | Usage in Java Implementation
 
 ## RPC Message Exchange
 
-Both the binary protocol and the compact protocol assume a transport layer that exposes a bi-directional byte stream,
-for example a TCP socket. Both use the following exchange:
+The following is the usual flow of operations for supporting RPC style communication encoded with Thrift.
 
 1. Client sends a message (type `T_CALL` or `T_ONEWAY`). The message contains some metadata and the name of the method
    to invoke.
@@ -309,10 +314,8 @@ Type `T_EXCEPTION` is used for other exceptions. That is: when the service metho
 in the Thrift IDL file, or some other part of the Thrift stack throws an exception. For example when the server could
 not encode or decode a message or struct.
 
-In the Java implementation (0.9.3) there is different behavior for the synchronous and asynchronous server. In the async
-server all exceptions are send as a `TApplicationException` (see 'Response struct' below). In the synchronous Java
-implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked
-exceptions lead to an immediate close of the connection.
+> In the Java implementation (0.9.3) there is different behavior for the synchronous and asynchronous server. In the async
+server all exceptions are send as a `TApplicationException` (see 'Response struct' below). In the synchronous Java implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked exceptions lead to an immediate close of the connection.
 
-Although the standard Apache Thrift Java clients do not support pipelining (sending multiple requests without waiting
+> Although the standard Apache Thrift Java clients do not support pipelining (sending multiple requests without waiting
 for an response), the standard Apache Thrift Java servers do support it.
