@@ -165,7 +165,7 @@ enum CallType {
   void writeMessageEnd(),
   void writeStructBegin(1: string name),
   void writeStructEnd(),
-  void writeFieldBegin(1: FielHeader field),
+  void writeFieldBegin(1: FieldHeader field),
   void writeFieldEnd(),
   void writeFieldStop(),
   void writeMapBegin(1: MapHeader map),
@@ -204,7 +204,7 @@ enum CallType {
 }
 ```
 
-> In general most implementations will provide a common read/write API (a single class with all methods above for example) and therefore expect to operate with a bin-directional transport able to both read and write bytes. However, in some cases (Scheme for example) I/O is separated into read and write capabilities and so the protocol may be represented as two APIs, one for read and one for write.
+> In general most implementations will provide a common read/write API (a single class with all methods above for example) and therefore expect to operate with a bi-directional transport able to both read and write bytes. However, in some cases (Scheme for example) I/O is separated into distinct read and write capabilities and so the protocol may be represented as two APIs, one for read and one for write.
 
 **Example**
 
@@ -235,6 +235,8 @@ enum CallType {
 ```
 
 ### Interface Types
+
+The following types support the protocol API. These are again abstract, implementations are able to provide more idiomatic forms as they wish (Java may use classes, Python may use tuples, Scheme may use multiple values, and so on).
 
 ```thrift
 struct MessageHeader {
