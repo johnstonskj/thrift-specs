@@ -108,7 +108,7 @@ T_*ID*     | ID | IDL Type | Comments
 
 *Notes*:
 
-* These values are part of an enumeration `Type`.
+* These values are part of an enumeration `TType`.
 * Character string may be UTF-7 or UTF-8.
 * Unless otherwise specified in a protocol, enumeration values are encoded as `T_I32` values.
 
@@ -150,7 +150,7 @@ ID | Implementation | T_*ID*
 The following enumeration represents the common values for `message-type`.
 
 ```thrift
-enum CallType {
+enum TMessageType {
   T_CALL = 1
   T_REPLY = 2
   T_EXCEPTION = 3
@@ -162,18 +162,18 @@ enum CallType {
 
 ```thrift
 /* interface */ service TProtocol {
-  void writeMessageBegin(1: MessageHeader message),
+  void writeMessageBegin(1: TMessage message),
   void writeMessageEnd(),
   void writeStructBegin(1: string name),
   void writeStructEnd(),
-  void writeFieldBegin(1: FieldHeader field),
+  void writeFieldBegin(1: TField field),
   void writeFieldEnd(),
   void writeFieldStop(),
-  void writeMapBegin(1: MapHeader map),
+  void writeMapBegin(1: TMap map),
   void writeMapEnd(),
-  void writeListBegin(1: ListHeader list)
+  void writeListBegin(1: TList list)
   void writeListEnd(),
-  void writeSetBegin(1: ListHeader set)
+  void writeSetBegin(1: TList set)
   void writeSetEnd(),
   void writeBool(1: bool v)
   void writeByte(1: byte v)
@@ -183,17 +183,17 @@ enum CallType {
   void writeDouble(1: double v)
   void writeString(1: string v)
 
-  MessageHeader readMessageBegin(),
+  TMessage readMessageBegin(),
   void readMessageEnd(),
   string readStructBegin(),
   void readStructEnd(),
-  FieldHeader readFieldBegin(),
+  TField readFieldBegin(),
   void readFieldEnd(),
-  MapHeader readMapBegin(),
+  TMap readMapBegin(),
   void readMapEnd(),
-  ListHeader readListBegin(),
+  TList readListBegin(),
   void readListEnd(),
-  ListHeader readSetBegin(),
+  TList readSetBegin(),
   void readSetEnd(),
   bool readBool(),
   byte readByte(),
@@ -242,33 +242,33 @@ We assume that distinct constructor, or factory, procedures exist in a protocol 
 The following types support the protocol API. These are again abstract, implementations are able to provide more idiomatic forms as they wish (Java may use classes, Python may use tuples, Scheme may use multiple values, and so on).
 
 ```thrift
-struct MessageHeader {
+struct TMessage {
   1: string name,
-  2: CallType type,
-  3: i32 sequence
+  2: TMessageType type,
+  3: i32 sequenceID
 }
 
-struct FieldHeader {
+struct TField {
   1: string name,
-  2: Type type,
+  2: TType type,
   3: i32 id
 }
 
-struct ListHeader {
-  1: Type elementType,
-  2: i32 size
+struct TList {
+  1: TType elementType,
+  2: i32 count
 }
 
-struct MapHeader {
-  1: Type keyType,
-  2: Type elementType,
-  3: i32 size
+struct TMap {
+  1: TType keyType,
+  2: TType elementType,
+  3: i32 count
 }
 ```
 
 ### Exceptions
 
-When the message is of type Exception the struct is encoded as if it was declared by the following IDL:
+When the message is of type `T_EXCEPTION` the struct is encoded as if it was declared by the following IDL:
 
 ```thrift
 exception TApplicationException {
@@ -318,7 +318,7 @@ in the Thrift IDL file, or some other part of the Thrift stack throws an excepti
 not encode or decode a message or struct.
 
 > In the Java implementation (0.9.3) there is different behavior for the synchronous and asynchronous server. In the async
-server all exceptions are send as a `TApplicationException` (see 'Response struct' below). In the synchronous Java implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked exceptions lead to an immediate close of the connection.
+server all exceptions are send as a `TApplicationException`. In the synchronous Java implementation only (undeclared) exceptions that extend `TException` are send as a `TApplicationException`. Unchecked exceptions lead to an immediate close of the connection.
 
 > Although the standard Apache Thrift Java clients do not support pipelining (sending multiple requests without waiting
 for an response), the standard Apache Thrift Java servers do support it.
