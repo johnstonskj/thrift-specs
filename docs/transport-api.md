@@ -46,6 +46,8 @@ The following set of methods represent a mixin capability for transports that su
 }
 ```
 
+The behavior of a seekable transport when the `position` is set beyond the value of `length()` is implementation specific.
+
 ## Server Transport API
 
 The following is the server-side API that implements a listener loop for, and dispatches, client requests.
