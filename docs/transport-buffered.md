@@ -16,6 +16,14 @@ In terms of configuration an implementation may choose to support any or all of 
 * A single buffer size set when the transport is initialized.
 * Separate read and write buffer sizes set when the transport is initialized.
 
+From the C++ header:
+
+```c++
+TBufferedTransport(stdcxx::shared_ptr<TTransport> transport);
+TBufferedTransport(stdcxx::shared_ptr<TTransport> transport, uint32_t sz);
+TBufferedTransport(stdcxx::shared_ptr<TTransport> transport, uint32_t rsz, uint32_t wsz);
+```
+
 ## Framed Transport
 
 This wrapper provides a capability to ensure the read of an entire message (or defined components thereof) by preceding the message with a 4-byte integer representing the number of bytes to be read - the frame. 
