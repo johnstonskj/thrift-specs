@@ -204,6 +204,8 @@ enum CallType {
 }
 ```
 
+We assume that distinct constructor, or factory, procedures exist in a protocol implementation to create instances of specific protocols.
+
 > In general most implementations will provide a common read/write API (a single class with all methods above for example) and therefore expect to operate with a bi-directional transport able to both read and write bytes. However, in some cases (Scheme for example) I/O is separated into distinct read and write capabilities and so the protocol may be represented as two APIs, one for read and one for write.
 
 **Example**
