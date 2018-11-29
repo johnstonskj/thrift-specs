@@ -28,7 +28,6 @@ The following sections will outline details on the specific layers, with specifi
 The Transport layer provides a simple abstraction for reading/writing from/to the network. This enables Thrift to decouple the underlying transport from the rest of the system (serialization/deserialization, for instance).
 
 * [Transport API and Behavior](https://johnstonskj.github.io/thrift-specs/transport-api)
-* *End-Point* and *Wrapper* Transports
 
 ### Transport Types Supported
 
