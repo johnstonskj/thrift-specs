@@ -26,8 +26,19 @@ TBufferedTransport(stdcxx::shared_ptr<TTransport> transport, uint32_t rsz, uint3
 
 ## Framed Transport
 
-This wrapper provides a capability to ensure the read of an entire message (or defined components thereof) by preceding the message with a 4-byte integer representing the number of bytes to be read - the frame. 
+This wrapper provides a capability to ensure the read of an entire message (or defined components thereof) by preceding the message with a `T_I32` representing the number of bytes to be read - the frame. 
 
-The procedure `flush()` (and `close()` is expected to call `flush()`) is expected to be the point at which a frame is written to the wrapped transport from the internal buffer.
+```
+Framed Transport, 4+ bytes:
++--------+--------+--------+--------+--------+...+--------+
+| length                            | bytes               |
++--------+--------+--------+--------+--------+...+--------+
+```
 
-> Note that a default or base implementation of `TProtocol` may insert a call to `flush()` from within `writeMessageEnd()`.
+* `length` - a `T_I32` in network (big-endian) order.
+* `bytes` - a buffer of `T_BYTE`.
+
+Notes:
+
+* The procedure `flush()` (and `close()` is expected to call `flush()`) is expected to be the point at which a frame is written to the wrapped transport from the internal buffer.
+* A default, or base, implementation of `TProtocol` *may* insert a call to `flush()` from within `writeMessageEnd()`.
