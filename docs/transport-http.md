@@ -13,4 +13,12 @@ Header Name | Value | Comments
 `Content-Type` | `application/x-thrift` |
 `Accept` | `application/x-thrift` |
 
+Additionally:
+
+* `Connection` - C++ allows `Keep-Alive`
+* `Transfer-Encoding` - C++
+* `X-Forwarded-For` - C++
+
+C++ also supports CORS pre-flight option check as well as `Access-Control-*` headers on POST response.
+
 ## HTTP Server
